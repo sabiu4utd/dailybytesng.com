@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Models\Users_model;
+use App\Models\Profile_model;
+
+class Auth extends BaseController
+{
+    public function index(): string
+    {
+        return view('login');
+    }
+
+    public function register(): string
+    {
+        return view('register');
+    }
+
+    public function login()
+    {
+        $users = new Users_model();
+        $profile = new Profile_model();
+        $session = session();
+
+        $user = $users
+            ->join('profile', 'profile.userid = users.userid')
+            ->where('username', $this->request->getPost('username'))->first();
+        if ($user) {
+            if (hash('SHA512', $this->request->getPost('password')) == $user->password) {
+                $sessionData = [
+                    'userid'    => $user->userid,
+                    'username'  => $user->username,
+                    'firstname'      => $user->firstname,
+                    'surname'      => $user->surname,
+                    'othername'      => $user->othername,
+                    'email'      => $user->email,
+                    'phone'      => $user->phone,
+                    'role'      => $user->role,
+                    'gender'      => $user->gender,
+                    'date_joined'      => $user->created_at,
+                    'isLoggedIn' => true
+                ];
+                $session->set($sessionData);
+                return redirect()->to('dashboard');
+            } else {
+                $session->setFlashdata('error', 'Invalid username or password');
+                return redirect()->to('/');
+            }
+        } else {
+            $session->setFlashdata('error', 'Invalid username or password');
+            return redirect()->to('/');
+        }
+    }
+    public function dashboard()
+    {
+        $profile = new Profile_model();
+        $session = session();
+        $user = $profile->where('userid', $session->get('userid'))->first();
+        $data['user'] = $user;
+        return view('admin', $data);
+    }
+    public function upload_passport()
+    {
+        $file = $this->request->getFile('passport_url');
+        $fileName = $file->getRandomName();
+        $file->move('assets/passport', $fileName);
+        $profile = new Profile_model();
+        $session = session();
+        $profile->where('userid', $session->get('userid'))->set(['passport_url' => $fileName])->update();
+        return redirect()->to('dashboard');
+        
+    }
+    public function post_news()
+    {
+        return view('publisher-dashboard');
+    }
+}

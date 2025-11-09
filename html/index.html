@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Bytes | Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #1e40af;
+      --text-primary: #1f2937;
+      --text-secondary: #4b5563;
+      --bg-light: #f8fafc;
+    }
+    body { 
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      background-color: var(--bg-light);
+    }
+    .navbar {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .bg-white img {
+      transition: transform 0.3s ease;
+    }
+    .bg-white a:hover img {
+      transform: scale(1.05);
+    }
+    .bg-white h4 {
+      font-size: 1.5rem;
+      letter-spacing: -0.5px;
+    }
+    .navbar-nav {
+      gap: 0.5rem;
+    }
+    .nav-link {
+      padding: 0.5rem 0.8rem !important;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    .nav-link:hover {
+      background-color: var(--bg-light);
+    }
+    .nav-link.active {
+      background-color: var(--primary-color);
+      color: white !important;
+    }
+    @media (max-width: 991.98px) {
+      .navbar-collapse {
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+      .navbar-nav {
+        padding: 1rem 0;
+      }
+    }
+    .nav-link {
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    .card-title {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      font-weight: 500;
+      padding: 0.5rem 1.5rem;
+    }
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+    footer { 
+      background: var(--primary-color); 
+      color: #fff; 
+      padding: 20px 0;
+    }
+    .latest-news-link {
+      display: block;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    .latest-news-link:hover {
+      background-color: #fff;
+      transform: translateX(5px);
+    }
+    .news-item {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .news-item:hover {
+      transform: translateX(5px);
+    }
+    .news-item h6 {
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .news-item:hover h6 {
+      color: var(--primary-color);
+    }
+    .card-header h5 {
+      position: relative;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    .card-header h5::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--primary-color);
+      border-radius: 3px;
+    }
+    .object-fit-cover {
+      object-fit: cover;
+    }
+    .recent-news-item {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      background-color: transparent;
+    }
+    .recent-news-item:hover {
+      background-color: rgba(37, 99, 235, 0.05);
+      transform: translateX(5px);
+    }
+    .recent-news-item h6 {
+      color: var(--text-primary);
+    }
+    /* Social icons in footer */
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--primary-color);
+      border: 1px solid rgba(0,0,0,0.06);
+      margin-left: 0.5rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .social-icons a:hover {
+      background: var(--primary-color);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 575.98px) {
+      .social-icons a { width:32px; height:32px; }
+    }
+    .recent-news-item:hover h6 {
+      color: var(--primary-color);
+    }
+    /* Layout-specific styles for 3-column design */
+    .category-list .list-group-item {
+      border: 0;
+      padding: .6rem .75rem;
+      border-radius: .5rem;
+      transition: background .15s ease, transform .15s ease;
+    }
+    .category-list .list-group-item:hover {
+      background: rgba(37,99,235,0.06);
+      transform: translateX(4px);
+    }
+    .latest-list .list-group-item {
+      border: 0;
+      padding: .75rem 1rem;
+    }
+    .breaking-card .card-body { padding: 1.25rem; }
+    @media (max-width: 767.98px) {
+      .category-list .list-group-item, .latest-list .list-group-item { padding: .5rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Logo Section -->
+  <div class="bg-white py-3 border-bottom">
+    <div class="container text-center">
+      <a class="d-inline-block" href="index.html">
+        <img src="logo.jpg" alt="Daily Bytes Logo" style="height: 100px;"> 
+        <!-- <h4 class="mt-2 mb-0 fw-bold text-primary">Daily Bytes</h4> -->
+      </a>
+    </div>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+         
+          
+          <li class="nav-item"><a href="#" class="nav-link">E-Paper</a></li>
+          <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+          
+          <li class="nav-item"><a href="#" class="nav-link">Business</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Politics</a></li>
+          
+          
+          <li class="nav-item"><a href="#" class="nav-link">Agriculture</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Sports</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Opinion</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Education</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Entertainment</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">International</a></li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item"><a href="login.html" class="nav-link text-primary">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section class="container py-4">
+    <div class="row g-4">
+      <!-- Column 1: Category News -->
+      <aside class="col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-header bg-white border-0">
+            <h5 class="mb-0 fw-bold text-primary">Category Updates</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="list-group list-group-flush category-news">
+              <!-- Sports News -->
+              <a href="single_news.html" class="list-group-item border-0 p-3">
+                <div class="position-relative mb-2">
+                  <img src="sports.jpg" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Sports News">
+                  <span class="badge bg-primary position-absolute top-0 end-0 m-2">Sports</span>
+                </div>
+                <h6 class="mb-1 fw-semibold">Super Eagles Ready for AFCON Challenge</h6>
+                <small class="text-muted">2 hours ago</small>
+              </a>
+
+              <!-- Business News -->
+              <a href="single_news.html" class="list-group-item border-0 p-3">
+                <div class="position-relative mb-2">
+                  <img src="business.jpg" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Business News">
+                  <span class="badge bg-primary position-absolute top-0 end-0 m-2">Business</span>
+                </div>
+                <h6 class="mb-1 fw-semibold">Naira Gains Strength in Forex Market</h6>
+                <small class="text-muted">3 hours ago</small>
+              </a>
+
+              <!-- Agriculture News -->
+              <a href="single_news.html" class="list-group-item border-0 p-3">
+                <div class="position-relative mb-2">
+                  <img src="agriculture.jpg" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Agriculture News">
+                  <span class="badge bg-primary position-absolute top-0 end-0 m-2">Agriculture</span>
+                </div>
+                <h6 class="mb-1 fw-semibold">New Farming Technologies Boost Crop Yields</h6>
+                <small class="text-muted">4 hours ago</small>
+              </a>
+
+              <!-- Politics News -->
+              <a href="single_news.html" class="list-group-item border-0 p-3">
+                <div class="position-relative mb-2">
+                  <img src="politics.jpg" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Politics News">
+                  <span class="badge bg-primary position-absolute top-0 end-0 m-2">Politics</span>
+                </div>
+                <h6 class="mb-1 fw-semibold">Parliament Debates New Reform Bill</h6>
+                <small class="text-muted">5 hours ago</small>
+              </a>
+
+              <!-- Entertainment News -->
+              <a href="single_news.html" class="list-group-item border-0 p-3">
+                <div class="position-relative mb-2">
+                  <img src="entertainment.jpg" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Entertainment News">
+                  <span class="badge bg-primary position-absolute top-0 end-0 m-2">Entertainment</span>
+                </div>
+                <h6 class="mb-1 fw-semibold">Nollywood Releases Most Anticipated Movie</h6>
+                <small class="text-muted">6 hours ago</small>
+              </a>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Column 2: Breaking News (featured) -->
+      <main class="col-lg-6">
+        <div class="card border-0 shadow-sm breaking-card mb-4">
+          <img src="buhari.jpg" class="card-img-top object-fit-cover" alt="Breaking Image" style="max-height:360px;">
+          <div class="card-body">
+            <span class="badge bg-primary mb-2">Breaking</span>
+            <h3 class="card-title">Breaking: Major Policy Changes Announced</h3>
+            <p class="text-muted">November 4, 2025 | By Admin</p>
+            <p class="card-text">In a groundbreaking announcement today, major policy changes that will affect various sectors of the economy have been revealed. The administration says the measures will be phased in with urgent focus on stabilising key services and supporting affected communities.</p>
+            <a href="single_news.html" class="btn btn-primary">Read Full Story</a>
+          </div>
+        </div>
+
+        <!-- Additional breaking headlines -->
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm p-3">
+              <h6 class="mb-1">Government Announces Emergency Measures</h6>
+              <small class="text-muted">45 mins ago</small>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card border-0 shadow-sm p-3">
+              <h6 class="mb-1">Ministries to Roll Out Support Packages</h6>
+              <small class="text-muted">1 hour ago</small>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Column 3: Latest News -->
+      <aside class="col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-header bg-white border-0">
+            <h5 class="mb-0 fw-bold text-primary">Latest News</h5>
+          </div>
+          <div class="card-body latest-list p-0">
+            <div class="list-group list-group-flush">
+              <a href="#" class="list-group-item d-flex align-items-start">
+                <img src="buhari.jpg" class="rounded me-3" style="width:72px;height:50px;object-fit:cover" alt="thumb">
+                <div>
+                  <div class="fw-semibold">FG Implements New Education Policy</div>
+                  <small class="text-muted">Education • 30 mins ago</small>
+                </div>
+              </a>
+              <a href="#" class="list-group-item d-flex align-items-start">
+                <img src="buhari.jpg" class="rounded me-3" style="width:72px;height:50px;object-fit:cover" alt="thumb">
+                <div>
+                  <div class="fw-semibold">Stock Market Hits New Record High</div>
+                  <small class="text-muted">Business • 1 hour ago</small>
+                </div>
+              </a>
+              <a href="#" class="list-group-item d-flex align-items-start">
+                <img src="buhari.jpg" class="rounded me-3" style="width:72px;height:50px;object-fit:cover" alt="thumb">
+                <div>
+                  <div class="fw-semibold">National Team Announces Squad</div>
+                  <small class="text-muted">Sports • 2 hours ago</small>
+                </div>
+              </a>
+              <a href="#" class="list-group-item d-flex align-items-start">
+                <img src="buhari.jpg" class="rounded me-3" style="width:72px;height:50px;object-fit:cover" alt="thumb">
+                <div>
+                  <div class="fw-semibold">Tech Innovation Summit Opens</div>
+                  <small class="text-muted">Technology • 3 hours ago</small>
+                </div>
+              </a>
+              <a href="#" class="list-group-item d-flex align-items-start">
+                <img src="buhari.jpg" class="rounded me-3" style="width:72px;height:50px;object-fit:cover" alt="thumb">
+                <div>
+                  <div class="fw-semibold">Agriculture Export Growth Continues</div>
+                  <small class="text-muted">Agriculture • 4 hours ago</small>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+  <footer class="mt-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center py-3">
+      <div class="mb-2 mb-md-0">
+        <p class="mb-0">&copy; 2025 Daily Bytes. All Rights Reserved.</p>
+      </div>
+      <div class="social-icons">
+        <a href="https://facebook.com/YourPage" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.1 5.66 21.3 10.44 22v-7.06H7.9v-2.87h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.74l-.44 2.87h-2.3V22C18.34 21.3 22 17.1 22 12.07z"/></svg>
+        </a>
+        <a href="https://twitter.com/YourHandle" target="_blank" rel="noopener" aria-label="Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M22 5.92c-.63.28-1.31.48-2.02.57.73-.44 1.29-1.14 1.55-1.97-.68.4-1.43.69-2.23.85C18.64 4.6 17.8 4 16.86 4c-1.42 0-2.57 1.15-2.57 2.57 0 .2.02.4.06.59C11.83 7.04 9.06 5.5 7.35 3.2c-.22.38-.34.82-.34 1.29 0 .89.45 1.67 1.14 2.13-.53-.02-1.03-.16-1.47-.4v.04c0 1.24.88 2.28 2.05 2.52-.21.06-.43.09-.66.09-.16 0-.31-.02-.46-.04.31.97 1.2 1.68 2.26 1.7C8.9 12.96 7.3 13.6 5.58 13.6c-.36 0-.72-.02-1.07-.06 1 1.29 2.46 2.04 4 2.04 4.8 0 7.43-3.98 7.43-7.43v-.34c.51-.36.95-.8 1.3-1.31-.47.21-.98.35-1.51.41.54-.32.95-.84 1.15-1.46z"/></svg>
+        </a>
+        <a href="https://instagram.com/YourHandle" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zM12 7.5A4.5 4.5 0 1 0 12 16.5 4.5 4.5 0 0 0 12 7.5zm0 2.1a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8zM17.8 6.1a.9.9 0 1 1-1.8 0 .9.9 0 0 1 1.8 0z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
