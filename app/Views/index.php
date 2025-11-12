@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php //ar_dump($news); ?>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -261,14 +262,19 @@
       </aside>
 
       <!-- Column 2: Breaking News (featured) -->
+      <?php if ($news) { ?>
       <main class="col-lg-6">
         <div class="card border-0 shadow-sm breaking-card mb-4">
-          <img src="<?php echo base_url(); ?>assets/images/buhari.jpg" class="card-img-top object-fit-cover" alt="Breaking Image" style="max-height:360px;">
+          <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $news->cover_picture; ?>" class="card-img-top object-fit-cover" alt="Breaking Image" style="max-height:360px;">
           <div class="card-body">
             <span class="badge bg-primary mb-2">Breaking</span>
-            <h3 class="card-title">Breaking: Major Policy Changes Announced</h3>
-            <p class="text-muted">November 4, 2025 | By Admin</p>
-            <p class="card-text">In a groundbreaking announcement today, major policy changes that will affect various sectors of the economy have been revealed. The administration says the measures will be phased in with urgent focus on stabilising key services and supporting affected communities.</p>
+            <h3 class="card-title">Breaking: <?php echo $news->title; ?></h3>
+            <p class="text-muted">
+
+              <?php echo $date = date('F j, Y', strtotime($news->created_at)); ?> | By <strong><?php echo $news->firstname; ?> <?php echo $news->surname; ?></strong>
+            
+            </p>
+            <p class="card-text"><?php echo $news->content; ?></p>
             <a href="single_news.html" class="btn btn-primary">Read Full Story</a>
           </div>
         </div>
@@ -289,7 +295,7 @@
           </div>
         </div>
       </main>
-
+      <?php } ?>
       <!-- Column 3: Latest News -->
       <aside class="col-lg-3">
         <div class="card border-0 shadow-sm h-100">

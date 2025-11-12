@@ -1,3 +1,10 @@
+<?php
+  $categoryOptions = "";
+  foreach ($categories as $category) {
+    $categoryOptions .= "<option value='" . $category->categoryid . "'>" . $category->category . "</option>";
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,32 +24,35 @@
   <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid">
       <a class="navbar-brand fw-bold" href="#">Daily Bytes Publisher</a>
-      <a href="login.html" class="btn btn-light btn-sm">Logout</a>
+      <a href="<?php echo site_url('logout') ?>" class="btn btn-light btn-sm">Logout</a>
     </div>
   </nav>
   <div class="container py-4">
     <h4 class="mb-3">Publish New Article</h4>
-    <form id="publishForm" method="post" action="#">
+    <form id="publishForm" method="POST" action="<?php echo site_url('post_news') ?>" enctype="multipart/form-data">
       <div class="mb-3">
         <label class="form-label">News Title</label>
         <input id="title" name="title" type="text" class="form-control" placeholder="Enter headline">
       </div>
       <div class="mb-3">
         <label class="form-label">Category</label>
-        <select id="category" name="category" class="form-select">
-          <option>Politics</option>
-          <option>Business</option>
-          <option>Sports</option>
-          <option>Technology</option>
-          <option>News</option>
-          <option>Agriculture</option>
-          <option>Entertainment</option>
+        <select id="category" name="categoryid" class="form-select">
+          <?php echo $categoryOptions; ?>
+         
         </select>
       </div>
       <div class="mb-3">
-        <label class="form-label">Upload Image</label>
-        <input type="file" class="form-control">
+       
+        <div class="form-check form-switch">
+          <input class="form-check-input" name="breaking_news" value="Yes" type="checkbox" id="flexSwitchCheckDefault">
+          <label class="form-check-label" for="flexSwitchCheckDefault">Breaking News?</label>
+        </div>
       </div>
+      <div class="mb-3">
+        <label class="form-label">Upload Cover Picture</label>
+        <input type="file" class="form-control" name="cover_picture" accept="image/*">
+      </div>
+
       <div class="mb-3">
         <label class="form-label editor-label">Content</label>
         <!-- Quill editor container -->
@@ -59,6 +69,8 @@
             <button class="ql-underline"></button>
             <button class="ql-link"></button>
             <button class="ql-image"></button>
+            <button class="ql-video"></button>
+            <button class="ql-clean"></button>
           </span>
           <span class="ql-formats">
             <button class="ql-list" value="ordered"></button>

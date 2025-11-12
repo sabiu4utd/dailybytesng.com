@@ -27,7 +27,7 @@
           <li class="nav-item"><a href="#" class="nav-link">International</a></li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item"><a href="<?php echo site_url('login'); ?>" class="nav-link text-primary">Login</a></li>
+          <li class="nav-item"><a href="<?php echo site_url('login'); ?>" class="nav-link text-primary">Sign In</a></li>
         </ul>
       </div>
     </div>

@@ -106,7 +106,7 @@
       </div>
       <nav>
         <a class="btn btn-sm btn-outline-brand me-2" href="#">Dashboard</a>
-        <a class="btn btn-sm btn-outline-brand" href="#">Logout</a>
+        <a class="btn btn-sm btn-outline-brand" href="<?php echo site_url('logout') ?>">Logout</a>
       </nav>
     </div>
   </header>
@@ -210,6 +210,8 @@
                   <?php } ?>
                   <?php if($_SESSION['role'] == 'admin') { ?>
                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">Manage Users</button>
+                    <a href="<?php echo site_url('post_news') ?>" class="btn btn-primary">Post News Article</a>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">Publish News Article</button>
                   <?php } ?>
                 <button class="btn btn-outline-primary">Change Password</button>
                 <button class="btn btn-outline-secondary">View Activity Log</button>

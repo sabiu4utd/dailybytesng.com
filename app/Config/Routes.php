@@ -14,5 +14,8 @@ $routes->get('dashboard', 'Auth::dashboard');
 $routes->get('logout', 'Auth::logout');
 $routes->post('upload_passport', 'Auth::upload_passport');
 $routes->get('post_news', 'Auth::post_news');
+$routes->post('post_news', 'Auth::save_news');
+
+
 
 

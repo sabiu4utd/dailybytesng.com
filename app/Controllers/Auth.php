@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use App\Models\Users_model;
 use App\Models\Profile_model;
+use App\Models\Category_model;
+use App\Models\News_model;
+use Ramsey\Uuid\Uuid;
 
 class Auth extends BaseController
 {
@@ -73,6 +76,46 @@ class Auth extends BaseController
     }
     public function post_news()
     {
-        return view('publisher-dashboard');
+        $cat = new Category_model();
+
+        $session = session();
+        $data['user'] = $session->get('userid');
+        $data['categories'] = $cat->findAll();
+        return view('publisher-dashboard', $data);
+    }
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to('/');
+    }
+    public function save_news()
+    {
+          $news = new News_model();
+        
+        if($this->request->getPost('breaking_news') == "Yes"){
+           $news->set(['breaking_news' => 'No'])
+           ->where('breaking_news', 'Yes')
+           ->update();
+        }
+      
+        $file = $this->request->getFile('cover_picture');
+        $session = session();
+        $fileName = $file->getRandomName();
+        $file->move('assets/uploads', $fileName);
+        
+      
+        $news->insert([
+            'newsid' => Uuid::uuid4()->toString(),
+            'title' => $this->request->getPost('title'),
+            'content' => $this->request->getPost('content'),
+            'categoryid' => $this->request->getPost('categoryid'),
+            'status' => 'pending',
+            'breaking_news' => $this->request->getPost('breaking_news') ?? 'No',
+            'posted_by' => $session->get('userid'),
+            'cover_picture' => $fileName,
+        ]);
+
+        return redirect()->to('dashboard');
     }
 }
