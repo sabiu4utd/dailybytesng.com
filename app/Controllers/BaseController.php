@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use DateTime;
 
 /**
  * Class BaseController
@@ -53,5 +54,32 @@ abstract class BaseController extends Controller
 
         // Preload any models, libraries, etc, here.
         $this->session = service('session');
+    }
+    protected function timeAgo($datetime)
+    {
+        // Normalize timestamps with microseconds
+        $time = new DateTime(substr($datetime, 0, 19));
+        $now = new DateTime();
+        $diff = $now->getTimestamp() - $time->getTimestamp();
+
+        if ($diff < 0) $diff = 0;
+
+        $minutes = floor($diff / 60);
+        $hours   = floor($diff / 3600);
+        $days    = floor($diff / 86400);
+        $months  = floor($diff / 2592000); // approx 30 days
+
+        if ($minutes < 1) return "0 minutes";
+        if ($minutes === 1) return "1m";
+        if ($minutes < 60) return $minutes . "m";
+
+        if ($hours === 1) return "1 hour ago";
+        if ($hours < 24) return $hours . " hours ago";
+
+        if ($days === 1) return "1 day ago";
+        if ($days < 30) return $days . " days ago";
+
+        if ($months === 1) return "1 month ago";
+        return $months . " months ago";
     }
 }

@@ -15,6 +15,8 @@ $routes->get('logout', 'Auth::logout');
 $routes->post('upload_passport', 'Auth::upload_passport');
 $routes->get('post_news', 'Auth::post_news');
 $routes->post('post_news', 'Auth::save_news');
+$routes->get('single_news/(:segment)', 'Home::single_news/$1');
+
 
 
 

@@ -24,190 +24,83 @@
   </style>
 </head>
 <body>
-  <!-- Logo Section -->
-  <div class="logo-top text-center">
-    <div class="container">
-      <a href="index.html" class="d-inline-block">
-        <img src="logo.jpg" alt="Daily Bytes Logo">
-        <h4 class="mt-2 mb-0 fw-bold text-primary">Daily Bytes</h4>
-      </a>
-    </div>
-  </div>
+  
 
   <!-- Navigation Menu -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white site-nav shadow-sm">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="siteNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#">Search</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Dailytrust</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">E-Paper</a></li>
-          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">News</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Business</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Politics</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Podcast</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Videos</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Agriculture</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Opinion</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Education</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Entertainment</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">International</a></li>
-        </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link text-primary" href="login.html">Login</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+   <?php echo view('header'); ?>
   <div class="container py-4">
     <div class="row">
       <div class="col-lg-8">
-        <h2 class="fw-bold">Tinubu Orders Immediate Resolution As Doctors Insist On Demands</h2>
-        <p class="text-muted">Published on November 4, 2025 | By Admin</p>
-        <img src="buhari.jpg" class="img-fluid rounded mb-3 news-image" alt="news">
+        <h2 class="fw-bold"><?php echo $news->title; ?></h2>
+        <p class="text-muted">Published on <?php echo $date = date('F j, Y', strtotime($news->created_at)); ?> | By <?php echo $news->firstname; ?> <?php echo $news->surname; ?></p>
+        <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $news->cover_picture; ?>" class="img-fluid rounded mb-3 news-image" alt="news">
         <div class="article-body">
-          <p>President Bola Tinubu has ordered the immediate resolution of the standoff between the federal government and striking medical doctors, urging all parties to return to the negotiating table and prioritise uninterrupted patient care. The directive, announced late on Tuesday, follows mounting reports of cancelled elective surgeries, delayed outpatient services and increasing pressure on emergency departments across several states. The administration said it would deploy a cross-ministerial team to mediate talks and identify practical steps that can be implemented immediately to stabilise services.</p>
-
-          <p>The dispute, organisers say, stems from long-standing grievances including delayed salaries, unresolved welfare packages and slow implementation of previously agreed reforms. Health workers have argued that these issues have compromised their ability to deliver quality care and have called for concrete timelines and accountability mechanisms. In response, the presidency emphasised a dual approach: immediate operational fixes to restore services and a longer-term structural review aimed at addressing the sector’s systemic problems.</p>
-
-          <p>Officials revealed that the mediation team will include representatives from the Ministries of Health and Labour, state health commissioners, and independent health regulators. The team’s early priorities will be to negotiate interim measures that protect emergency and critical care services, fast-track outstanding payments where feasible, and set clear deadlines for the implementation of broader reforms. State governments, which administer most public health facilities, have been urged to participate actively and to deploy temporary measures that keep hospitals functioning while talks proceed.</p>
-
-          <p>Patient advocacy groups and civil society welcomed the presidential intervention but warned that lasting results will depend on transparent follow-through. “We need concrete dates and verifiable milestones, not just assurances,” said a health policy analyst. Hospitals have been instructed to prioritise life-saving procedures and maintain capacity in intensive care and emergency units. Community leaders also stressed the human cost of prolonged disruptions, noting that delays in routine services disproportionately affect low-income and rural populations.</p>
-
-          <p>Observers say the government’s ability to deliver on promises will be essential to rebuild trust. Experts recommend a phased plan that bundles immediate financial relief with governance reforms — such as improved payroll systems, performance-linked incentives, and clearer career progression paths for health workers — to reduce the risk of repeat action. Analysts also suggested establishing an independent monitoring committee to ensure commitments are enacted and to provide regular public updates.</p>
-
-          <p>As negotiations begin, stakeholders have set an expectation for a short window of high-priority talks with follow-up meetings scheduled in the coming days. If the mediation yields tangible outcomes, the administration’s directive could mark the start of a broader health sector realignment, balancing fiscal constraints with urgent demands for worker welfare and service continuity. For now, families and clinicians alike are watching closely as leaders on both sides attempt to steer the health system back toward stability and uninterrupted care.</p>
+         <?php echo $news->content; ?>
         </div>
       </div>
       <div class="col-lg-4">
         <h5 class="fw-bold border-bottom pb-2 mb-3">More Stories</h5>
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
+          <?php foreach ($latest_news as $news) { ?>
+          <a href="<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" class="list-group-item list-group-item-action d-flex align-items-center">
+            <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $news->cover_picture; ?>" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
             <div class="ms-3">
-              <div class="small text-uppercase text-muted">Search</div>
-              <div class="fw-semibold">Top Search Trends: What Readers Are Looking For</div>
-              <small class="text-muted">10 mins ago</small>
+              <!-- <div class="small text-uppercase text-muted"><?php echo $news->category; ?></div> -->
+              <div class="fw-semibold"><?php echo $news->title; ?></div>
+              <small class="text-muted"><?php echo $news->category; ?> •
+
+                      <?php $created = $news->created_at ?? null;
+
+                      $timeAgo = '';
+
+                      // if no timestamp, avoid errors
+                      if ($created) {
+                        // Parse "2025-11-11 16:54:13.798164" (strip microseconds safely)
+                        $ts = strtotime(substr($created, 0, 19));
+                        $diff = max(0, time() - ($ts ?: 0));
+
+                        $minutes = intdiv($diff, 60);
+                        if ($minutes < 1) {
+                          $timeAgo = '0 minutes';
+                        } elseif ($minutes === 1) {
+                          $timeAgo = '1m';
+                        } elseif ($minutes < 60) {
+                          $timeAgo = $minutes . 'm';
+                        } else {
+                          $hours = intdiv($diff, 3600);
+                          if ($hours === 1) {
+                            $timeAgo = '1 hour ago';
+                          } elseif ($hours < 24) {
+                            $timeAgo = $hours . ' hours ago';
+                          } else {
+                            $days = intdiv($diff, 86400);
+                            if ($days === 1) {
+                              $timeAgo = '1 day ago';
+                            } elseif ($days < 30) {
+                              $timeAgo = $days . ' days ago';
+                            } else {
+                              $months = intdiv($diff, 2592000); // 30 days approx
+                              if ($months <= 1) {
+                                $timeAgo = '1 month ago';
+                              } else {
+                                $timeAgo = $months . ' months ago';
+                              }
+                            }
+                          }
+                        }
+                      } else {
+                        $timeAgo = 'unknown';
+                      }
+                      ?>
+
+                      <?php echo esc($timeAgo) ?>
+
+
+                    </small>
             </div>
           </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Dailytrust</div>
-              <div class="fw-semibold">Dailytrust Editorial: Key Takeaways Today</div>
-              <small class="text-muted">20 mins ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">E-Paper</div>
-              <div class="fw-semibold">E-Paper: Front Page Highlights</div>
-              <small class="text-muted">30 mins ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Home</div>
-              <div class="fw-semibold">Community Story: Local Initiative Makes Impact</div>
-              <small class="text-muted">35 mins ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">News</div>
-              <div class="fw-semibold">City Council Approves New Measures</div>
-              <small class="text-muted">40 mins ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Business</div>
-              <div class="fw-semibold">Companies Announce Quarterly Results</div>
-              <small class="text-muted">45 mins ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Politics</div>
-              <div class="fw-semibold">Opposition Critiques New Policy</div>
-              <small class="text-muted">50 mins ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Podcast</div>
-              <div class="fw-semibold">New Podcast: Economy Explained</div>
-              <small class="text-muted">1 hour ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Videos</div>
-              <div class="fw-semibold">Watch: Highlights from the Summit</div>
-              <small class="text-muted">1 hour ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Agriculture</div>
-              <div class="fw-semibold">Farmers Embrace Innovative Methods</div>
-              <small class="text-muted">1 hour ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Sports</div>
-              <div class="fw-semibold">Coach Names Weekend Squad</div>
-              <small class="text-muted">1.5 hours ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Opinion</div>
-              <div class="fw-semibold">Opinion: The Path Forward</div>
-              <small class="text-muted">2 hours ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Education</div>
-              <div class="fw-semibold">New Scholarship Opportunities Announced</div>
-              <small class="text-muted">2 hours ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">Entertainment</div>
-              <div class="fw-semibold">Celebrity Talks New Project</div>
-              <small class="text-muted">3 hours ago</small>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="buhari.jpg" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <div class="small text-uppercase text-muted">International</div>
-              <div class="fw-semibold">International Summit Concludes</div>
-              <small class="text-muted">4 hours ago</small>
-            </div>
-          </a>
-        </div>
+          <?php } ?>
+          
       </div>
     </div>
     </div>

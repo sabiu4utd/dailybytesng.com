@@ -1,7 +1,7 @@
-<div class="bg-white py-3 border-bottom">
+<div class="bg-white border-bottom">
     <div class="container text-center">
       <a class="d-inline-block" href="index.html">
-        <img src="<?php echo base_url(); ?>assets/images/logo.jpg" alt="Daily Bytes Logo" style="height: 100px;"> 
+        <img src="<?php echo base_url(); ?>assets/images/logo.jpg" alt="Daily Bytes Logo" style="height: 200px;"> 
         <!-- <h4 class="mt-2 mb-0 fw-bold text-primary">Daily Bytes</h4> -->
       </a>
     </div>
@@ -11,12 +11,11 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>`
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">E-Paper</a></li>
           <li class="nav-item"><a href="#" class="nav-link">Business</a></li>
           <li class="nav-item"><a href="#" class="nav-link">Politics</a></li>
           <li class="nav-item"><a href="#" class="nav-link">Agriculture</a></li>
