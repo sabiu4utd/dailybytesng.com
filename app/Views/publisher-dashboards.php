@@ -1,12 +1,14 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daily Bytes | News Detail</title>
+  <title>Pending News | Daily Bytes</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
+ <style>
     :root {
       --primary-color: #2563eb;
       --secondary-color: #1e40af;
@@ -243,90 +245,60 @@
   </style>
 </head>
 <body>
-  
-
-  <!-- Navigation Menu -->
   <?php echo view('header'); ?>
+
   <div class="container py-4">
-    <div class="row">
-      <div class="col-lg-8">
-        <h2 class="fw-bold"><?php echo $news->title; ?></h2>
-        <p class="text-muted">Published on <?php echo $date = date('F j, Y', strtotime($news->created_at)); ?> | By <?php echo $news->firstname; ?> <?php echo $news->surname; ?></p>
-        <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $news->cover_picture; ?>" class="img-fluid rounded mb-3 news-image" alt="news">
-        <div class="article-body" style="text-align: justify;">
-         <?php echo $news->content; ?>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="mb-0">Pending News</h4>
+      <a href="<?php echo site_url('publish_news') ?>" class="btn btn-sm btn-outline-primary">Go to Publisher</a>
+    </div>
+
+    <div class="card">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead>
+              <tr>
+                <th style="width:48px"></th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Submitted</th>
+                <th>Author</th>
+                <th class="text-end">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($news as $new) { ?>
+              <tr>
+                <td><img src="<?php echo base_url(); ?>assets/uploads/<?php echo $new->cover_picture; ?>" style="width:48px;height:36px;object-fit:cover" class="rounded" alt="thumb"></td>
+                <td class="fw-semibold"><?php echo $new->title; ?></td>
+                <td><?php echo $new->category; ?></td>
+                <td><?php echo $new->created_at; ?></td>
+                <td><?php echo $new->firstname . ' ' . $new->surname . ' ' . $new->othername; ?></td>
+                <td class="text-end">
+                  
+                  <a href="<?php echo site_url('read_news') ?>/<?php echo $new->newsid; ?>" class="btn btn-sm btn-primary">Open</a>
+                </td>
+              </tr>
+              <?php } ?>              
+            </tbody>
+          </table>
         </div>
       </div>
-      <div class="col-lg-4">
-        <h5 class="fw-bold border-bottom pb-2 mb-3">More Stories</h5>
-        <div class="list-group">
-          <?php foreach ($latest_news as $news) { ?>
-          <a href="<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $news->cover_picture; ?>" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
-            <div class="ms-3">
-              <!-- <div class="small text-uppercase text-muted"><?php echo $news->category; ?></div> -->
-              <div class="fw-semibold"><?php echo $news->title; ?></div>
-              <small class="text-muted"><?php echo $news->category; ?> •
-
-                      <?php $created = $news->created_at ?? null;
-
-                      $timeAgo = '';
-
-                      // if no timestamp, avoid errors
-                      if ($created) {
-                        // Parse "2025-11-11 16:54:13.798164" (strip microseconds safely)
-                        $ts = strtotime(substr($created, 0, 19));
-                        $diff = max(0, time() - ($ts ?: 0));
-
-                        $minutes = intdiv($diff, 60);
-                        if ($minutes < 1) {
-                          $timeAgo = '0 minutes';
-                        } elseif ($minutes === 1) {
-                          $timeAgo = '1m';
-                        } elseif ($minutes < 60) {
-                          $timeAgo = $minutes . 'm';
-                        } else {
-                          $hours = intdiv($diff, 3600);
-                          if ($hours === 1) {
-                            $timeAgo = '1 hour ago';
-                          } elseif ($hours < 24) {
-                            $timeAgo = $hours . ' hours ago';
-                          } else {
-                            $days = intdiv($diff, 86400);
-                            if ($days === 1) {
-                              $timeAgo = '1 day ago';
-                            } elseif ($days < 30) {
-                              $timeAgo = $days . ' days ago';
-                            } else {
-                              $months = intdiv($diff, 2592000); // 30 days approx
-                              if ($months <= 1) {
-                                $timeAgo = '1 month ago';
-                              } else {
-                                $timeAgo = $months . ' months ago';
-                              }
-                            }
-                          }
-                        }
-                      } else {
-                        $timeAgo = 'unknown';
-                      }
-                      ?>
-
-                      <?php echo esc($timeAgo) ?>
-
-
-                    </small>
-            </div>
-          </a>
-          <?php } ?>
-          
-      </div>
-    </div>
     </div>
 
-    <!-- Ten Most Recent -->
-    
+    <!-- <div class="d-flex justify-content-between align-items-center mt-3">
+      <small class="text-muted">Showing 1–5 of 5 pending articles</small>
+      <nav>
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item disabled"><span class="page-link">Prev</span></li>
+          <li class="page-item active"><span class="page-link">1</span></li>
+          <li class="page-item disabled"><span class="page-link">Next</span></li>
+        </ul>
+      </nav>
+    </div> -->
   </div>
+
   <?php echo view('footer'); ?>
 </body>
 </html>

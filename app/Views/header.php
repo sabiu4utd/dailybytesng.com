@@ -15,7 +15,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+          <li class="nav-item"><a href="<?php echo site_url('/') ?>" class="nav-link active">Home</a></li>
           <li class="nav-item"><a href="#" class="nav-link">Business</a></li>
           <li class="nav-item"><a href="#" class="nav-link">Politics</a></li>
           <li class="nav-item"><a href="#" class="nav-link">Agriculture</a></li>
@@ -24,6 +24,7 @@
           <li class="nav-item"><a href="#" class="nav-link">Education</a></li>
           <li class="nav-item"><a href="#" class="nav-link">Entertainment</a></li>
           <li class="nav-item"><a href="#" class="nav-link">International</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">About us</a></li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item"><a href="<?php echo site_url('login'); ?>" class="nav-link text-primary">Sign In</a></li>

@@ -27,6 +27,12 @@
       <a href="<?php echo site_url('logout') ?>" class="btn btn-light btn-sm">Logout</a>
     </div>
   </nav>
+  <div class="bg-white border-bottom">
+    <div class="container d-flex justify-content-between align-items-center py-2">
+      <div class="fw-semibold text-secondary">Publisher Dashboard</div>
+      <a href="<?php echo site_url('logout') ?>" class="btn btn-sm btn-outline-primary">Logout</a>
+    </div>
+  </div>
   <div class="container py-4">
     <h4 class="mb-3">Publish New Article</h4>
     <form id="publishForm" method="POST" action="<?php echo site_url('post_news') ?>" enctype="multipart/form-data">

@@ -260,54 +260,66 @@
           <div class="card-body p-0">
             <div class="list-group list-group-flush category-news">
               <!-- Sports News -->
-              <a href="single_news.html" class="list-group-item border-0 p-3">
+              <?php foreach($categories as $row) {?>
+              <a href="<?php echo site_url('category_news'); ?>/<?php echo $row->categoryid; ?>" class="list-group-item border-0 p-3">
                 <div class="position-relative mb-2">
-                  <img src="<?php echo base_url(); ?>assets/images/sports.jpg" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Sports News">
-                  <span class="badge bg-primary position-absolute top-0 end-0 m-2">Sports</span>
+                  <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->cover_picture; ?>" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Sports News">
+                  <span class="badge bg-primary position-absolute top-0 end-0 m-2"><?php echo $row->category; ?></span>
                 </div>
-                <h6 class="mb-1 fw-semibold">Super Eagles Ready for AFCON Challenge</h6>
-                <small class="text-muted">2 hours ago</small>
-              </a>
+                <h6 class="mb-1 fw-semibold"><?php echo $row->title; ?></h6>
+                <small class="text-muted"><?php echo $row->category; ?> •
 
-              <!-- Business News -->
-              <a href="single_news.html" class="list-group-item border-0 p-3">
-                <div class="position-relative mb-2">
-                  <img src="<?php echo base_url(); ?>assets/images/business.jpg" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Business News">
-                  <span class="badge bg-primary position-absolute top-0 end-0 m-2">Business</span>
-                </div>
-                <h6 class="mb-1 fw-semibold">Naira Gains Strength in Forex Market</h6>
-                <small class="text-muted">3 hours ago</small>
-              </a>
+                      <?php $created = $row->created_at ?? null;
 
-              <!-- Agriculture News -->
-              <a href="single_news.html" class="list-group-item border-0 p-3">
-                <div class="position-relative mb-2">
-                  <img src="<?php echo base_url(); ?>assets/images/agriculture.jpg" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Agriculture News">
-                  <span class="badge bg-primary position-absolute top-0 end-0 m-2">Agriculture</span>
-                </div>
-                <h6 class="mb-1 fw-semibold">New Farming Technologies Boost Crop Yields</h6>
-                <small class="text-muted">4 hours ago</small>
-              </a>
+                      $timeAgo = '';
 
-              <!-- Politics News -->
-              <a href="single_news.html" class="list-group-item border-0 p-3">
-                <div class="position-relative mb-2">
-                  <img src="<?php echo base_url(); ?>assets/images/politics.jpg" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Politics News">
-                  <span class="badge bg-primary position-absolute top-0 end-0 m-2">Politics</span>
-                </div>
-                <h6 class="mb-1 fw-semibold">Parliament Debates New Reform Bill</h6>
-                <small class="text-muted">5 hours ago</small>
-              </a>
+                      // if no timestamp, avoid errors
+                      if ($created) {
+                        // Parse "2025-11-11 16:54:13.798164" (strip microseconds safely)
+                        $ts = strtotime(substr($created, 0, 19));
+                        $diff = max(0, time() - ($ts ?: 0));
 
-              <!-- Entertainment News -->
-              <a href="single_news.html" class="list-group-item border-0 p-3">
-                <div class="position-relative mb-2">
-                  <img src="<?php echo base_url(); ?>assets/images/entertainment.jpg" class="rounded w-100" style="height: 120px; object-fit: cover;" alt="Entertainment News">
-                  <span class="badge bg-primary position-absolute top-0 end-0 m-2">Entertainment</span>
-                </div>
-                <h6 class="mb-1 fw-semibold">Nollywood Releases Most Anticipated Movie</h6>
-                <small class="text-muted">6 hours ago</small>
+                        $minutes = intdiv($diff, 60);
+                        if ($minutes < 1) {
+                          $timeAgo = '0 minutes';
+                        } elseif ($minutes === 1) {
+                          $timeAgo = '1m';
+                        } elseif ($minutes < 60) {
+                          $timeAgo = $minutes . 'm';
+                        } else {
+                          $hours = intdiv($diff, 3600);
+                          if ($hours === 1) {
+                            $timeAgo = '1 hour ago';
+                          } elseif ($hours < 24) {
+                            $timeAgo = $hours . ' hours ago';
+                          } else {
+                            $days = intdiv($diff, 86400);
+                            if ($days === 1) {
+                              $timeAgo = '1 day ago';
+                            } elseif ($days < 30) {
+                              $timeAgo = $days . ' days ago';
+                            } else {
+                              $months = intdiv($diff, 2592000); // 30 days approx
+                              if ($months <= 1) {
+                                $timeAgo = '1 month ago';
+                              } else {
+                                $timeAgo = $months . ' months ago';
+                              }
+                            }
+                          }
+                        }
+                      } else {
+                        $timeAgo = 'unknown';
+                      }
+                      ?>
+
+                      <?php echo esc($timeAgo) ?>
+
+
+                    </small>
               </a>
+              <?php } ?>  
+             
             </div>
           </div>
         </div>

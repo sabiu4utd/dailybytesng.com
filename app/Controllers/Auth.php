@@ -32,17 +32,17 @@ class Auth extends BaseController
         if ($user) {
             if (hash('SHA512', $this->request->getPost('password')) == $user->password) {
                 $sessionData = [
-                    'userid'    => $user->userid,
-                    'username'  => $user->username,
-                    'firstname'      => $user->firstname,
-                    'surname'      => $user->surname,
-                    'othername'      => $user->othername,
-                    'email'      => $user->email,
-                    'phone'      => $user->phone,
-                    'role'      => $user->role,
-                    'gender'      => $user->gender,
-                    'date_joined'      => $user->created_at,
-                    'isLoggedIn' => true
+                    'userid'        => $user->userid,
+                    'username'      => $user->username,
+                    'firstname'     => $user->firstname,
+                    'surname'       => $user->surname,
+                    'othername'     => $user->othername,
+                    'email'         => $user->email,
+                    'phone'         => $user->phone,
+                    'role'          => $user->role,
+                    'gender'        => $user->gender,
+                    'date_joined'   => $user->created_at,
+                    'isLoggedIn'    => true
                 ];
                 $session->set($sessionData);
                 return redirect()->to('dashboard');
@@ -72,7 +72,6 @@ class Auth extends BaseController
         $session = session();
         $profile->where('userid', $session->get('userid'))->set(['passport_url' => $fileName])->update();
         return redirect()->to('dashboard');
-        
     }
     public function post_news()
     {
@@ -91,20 +90,20 @@ class Auth extends BaseController
     }
     public function save_news()
     {
-          $news = new News_model();
-        
-        if($this->request->getPost('breaking_news') == "Yes"){
-           $news->set(['breaking_news' => 'No'])
-           ->where('breaking_news', 'Yes')
-           ->update();
-        }
-      
+        $news = new News_model();
+
+        // if ($this->request->getPost('breaking_news') == "Yes") {
+        //     $news->set(['breaking_news' => 'No'])
+        //         ->where('breaking_news', 'Yes')
+        //         ->update();
+        // }
+
         $file = $this->request->getFile('cover_picture');
         $session = session();
         $fileName = $file->getRandomName();
         $file->move('assets/uploads', $fileName);
-        
-      
+
+
         $news->insert([
             'newsid' => Uuid::uuid4()->toString(),
             'title' => $this->request->getPost('title'),

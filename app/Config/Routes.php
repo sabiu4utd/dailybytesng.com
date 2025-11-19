@@ -16,6 +16,15 @@ $routes->post('upload_passport', 'Auth::upload_passport');
 $routes->get('post_news', 'Auth::post_news');
 $routes->post('post_news', 'Auth::save_news');
 $routes->get('single_news/(:segment)', 'Home::single_news/$1');
+$routes->get('category_news/(:segment)', 'Home::category_news/$1');
+$routes->get('publish_news', 'Home::publish_news');
+$routes->get('read_news/(:segment)', 'Home::read_news/$1');
+$routes->get('publish/(:segment)', 'Home::publish/$1');
+
+
+
+
+
 
 
 

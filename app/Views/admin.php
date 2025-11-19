@@ -203,18 +203,19 @@
                    <a href="<?php echo site_url('post_news') ?>" class="btn btn-primary">Post News Article</a>
                   <?php } ?>
                   <?php if($_SESSION['role'] == 'editor') { ?>
-                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">Edit News Article</button>
+                   <a href="<?php echo site_url('edit_news') ?>" class="btn btn-primary">Edit News Article</a>
                   <?php } ?>
                   <?php if($_SESSION['role'] == 'publisher') { ?>
-                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">Publish News Article</button>
+                    <a href="<?php echo site_url('publish_news') ?>" class="btn btn-primary">Publish News Article</a>
                   <?php } ?>
                   <?php if($_SESSION['role'] == 'admin') { ?>
                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">Manage Users</button>
                     <a href="<?php echo site_url('post_news') ?>" class="btn btn-primary">Post News Article</a>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">Publish News Article</button>
+                     <a href="<?php echo site_url('publish_news') ?>" class="btn btn-primary">Publish News Article</a>
+                    <a href="<?php echo site_url('edit_news') ?>" class="btn btn-primary">Edit News Article</a>
                   <?php } ?>
-                <button class="btn btn-outline-primary">Change Password</button>
-                <button class="btn btn-outline-secondary">View Activity Log</button>
+                <a href="<?php echo site_url('change_password') ?>" class="btn btn-primary">Change Password</a>
+                <a href="<?php echo site_url('view_activity_log') ?>" class="btn btn-primary">View Activity Log</a>
                 
               </div>
             </div>
