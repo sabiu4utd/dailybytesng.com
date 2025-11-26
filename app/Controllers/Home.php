@@ -3,6 +3,12 @@
 namespace App\Controllers;
 
 use App\Models\News_model;
+use App\Models\Category_model;
+use App\Models\Profile_model;
+use App\Models\Users_model;
+use App\Models\Video_model;
+use Ramsey\Uuid\Uuid;
+
 
 class Home extends BaseController
 {
@@ -37,6 +43,13 @@ class Home extends BaseController
         GROUP BY categories.categoryid
         ORDER BY news.created_at DESC";
         $data['categories'] = $news->db->query($sql)->getResult();
+
+        $vedio = new Video_model();
+        $data['videos'] = $vedio
+            ->where('status', 'pending')
+            ->orderBy('created_at', 'DESC')
+            ->limit(4)
+            ->findAll();
 
 
 
@@ -105,5 +118,39 @@ class Home extends BaseController
         $news = new News_model();
         $news->update($newsid, ['status' => 'Published']);
         return redirect()->to('publish_news');
+    }
+    public function edit_news($news_id)
+    {
+        //return news based on id
+         $newsmodel= new News_model();
+        $data['news'] = $newsmodel
+        ->join('categories', 'categories.categoryid = news.categoryid')
+        ->where('newsid', $news_id)->first();
+       
+        $cat = new Category_model();
+        $session = session();
+        $data['user'] = $session->get('userid');
+        $data['categories'] = $cat->findAll();
+        ///var_dump($data); exit;
+        return view('edit_news', $data);
+    }
+    public function upload_video()
+    {
+        $video = new \App\Models\Video_model();
+        $video_link = $this->request->getPost('video_link');
+        $title = $this->request->getPost('title');
+        $description = $this->request->getPost('description');
+        $categoryid= $this->request->getPost('categoryid');
+        $uploaded_by = session()->get('userid');
+        $video->insert([
+            'videoid' => Uuid::uuid4()->toString(),
+            'title' => $title,
+            'description' => $description,
+            'video_link' => $video_link,
+            'status' => 'pending',
+            'categoryid' => $categoryid,
+            'uploaded_by' => $uploaded_by
+        ]);
+        return redirect()->to('dashboard');
     }
 }

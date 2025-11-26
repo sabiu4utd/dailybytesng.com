@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Review Article | Daily Bytes</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
  <style>
     :root {
@@ -300,30 +301,12 @@
           <div class="small mb-1"><span class="text-muted">Email:</span> <?php echo $news->email; ?></div>
           <div class="small"><span class="text-muted">Role:</span> <?php echo $news->role; ?></div>
           
-          <hr>
+          <!-- <hr>
           <div>
-              <h6 class="mb-2">Quick Actions</h6>
-              <div class="d-grid gap-2">
-                <?php if($_SESSION['role'] == 'author') { ?>
-                   <a href="<?php echo site_url('post_news') ?>" class="btn btn-primary">Post News Article</a>
-                  <?php } ?>
-                  <?php if($_SESSION['role'] == 'editor') { ?>
-                   <a href="<?php echo site_url('edit_news') ?>" class="btn btn-primary">Edit News Article</a>
-                  <?php } ?>
-                  <?php if($_SESSION['role'] == 'publisher') { ?>
-                    <a href="<?php echo site_url('publish_news') ?>" class="btn btn-primary">Publish News Article</a>
-                  <?php } ?>
-                  <?php if($_SESSION['role'] == 'admin') { ?>
-                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">Manage Users</button>
-                    <a href="<?php echo site_url('post_news') ?>" class="btn btn-primary">Post News Article</a>
-                     <a href="<?php echo site_url('publish_news') ?>" class="btn btn-primary">Publish News Article</a>
-                    <a href="<?php echo site_url('edit_news') ?>" class="btn btn-primary">Edit News Article</a>
-                  <?php } ?>
-                <a href="<?php echo site_url('change_password') ?>" class="btn btn-primary">Change Password</a>
-                <a href="<?php echo site_url('view_activity_log') ?>" class="btn btn-primary">View Activity Log</a>
+              <?php //echo view('links.php') ?>
                 
               </div>
-          </div>
+          </div> -->
         </div>
 
       </div>
@@ -331,5 +314,6 @@
   </div>
 
   <?php echo view('footer'); ?>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

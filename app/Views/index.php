@@ -338,28 +338,33 @@
                 <?php echo $date = date('F j, Y', strtotime($news->created_at)); ?> | By <strong><?php echo $news->firstname; ?> <?php echo $news->surname; ?></strong>
 
               </p>
-              <p class="card-text"><?php echo $news->content; ?></p>
+                <p class="card-text"><?php echo implode('</p><p class="card-text">', array_slice(explode('</p>', $news->content, 4), 0, 3)); ?></p>
               <a href="<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" class="btn btn-primary">Read Full Story</a>
             </div>
           </div>
-
+<?php } ?>
           <!-- Additional breaking headlines -->
-          <div class="row g-3">
-            <div class="col-12">
-              <div class="card border-0 shadow-sm p-3">
-                <h6 class="mb-1">Government Announces Emergency Measures</h6>
-                <small class="text-muted">45 mins ago</small>
+           <?php if (isset($videos) && !empty($videos)) { ?>
+            <div class="row g-3">
+            <?php foreach ($videos as $video) { ?>
+              <div class="col-md-4">
+                <div class="card border-0 shadow-sm p-3">
+                  <h6 class="mb-2"><?php echo $video->title; ?></h6>
+                  <div class="ratio ratio-16x9 mb-2">
+                    <?php echo $video->video_link; ?>
+                  </div>
+                  <p class="text-muted small mb-0">
+                    <?php echo $video->description; ?>
+                  </p>
+                </div>
               </div>
+            <?php } ?>
             </div>
-            <div class="col-12">
-              <div class="card border-0 shadow-sm p-3">
-                <h6 class="mb-1">Ministries to Roll Out Support Packages</h6>
-                <small class="text-muted">1 hour ago</small>
-              </div>
-            </div>
-          </div>
+           <?php } ?>
+           
+           
         </main>
-      <?php } ?>
+      
       <!-- Column 3: Latest News -->
       <aside class="col-lg-3">
         <div class="card border-0 shadow-sm h-100">

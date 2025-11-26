@@ -60,6 +60,8 @@ class Auth extends BaseController
         $profile = new Profile_model();
         $session = session();
         $user = $profile->where('userid', $session->get('userid'))->first();
+        $category = new Category_model();
+        $data['categories'] = $category->findAll();
         $data['user'] = $user;
         return view('admin', $data);
     }
@@ -116,5 +118,36 @@ class Auth extends BaseController
         ]);
 
         return redirect()->to('dashboard');
+    }
+      public function update_news()
+    {
+        $news = new News_model();
+
+     // echo $this->request->getFile('cover_picture')->getError(); exit;
+       //if file handle is empty ignore file upload
+       if ($this->request->getFile('cover_picture')->getError() == 0) {
+        //no file uploaded, update other fields only        
+        $file = $this->request->getFile('cover_picture');
+        $session = session();
+        $fileName = $file->getRandomName();
+        $file->move('assets/uploads', $fileName);
+       }
+
+       
+
+        $news
+        ->set('title', $this->request->getPost('title'))
+        ->set('content', $this->request->getPost('content'))
+        ->set('categoryid', $this->request->getPost('categoryid'))
+        ->set('status', 'pending')
+        ->set('breaking_news', $this->request->getPost('breaking') ?? 'No')
+        ->set('posted_by', $this->request->getPost('posted_by'))
+        ->set('cover_picture', $fileName ?? $this->request->getPost('cover_picture'))
+        ->where('newsid', $this->request->getPost('newsid'))
+        ->update();       
+           
+            
+
+     return redirect()->to('dashboard');
     }
 }

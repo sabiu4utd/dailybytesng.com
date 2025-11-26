@@ -20,6 +20,10 @@ $routes->get('category_news/(:segment)', 'Home::category_news/$1');
 $routes->get('publish_news', 'Home::publish_news');
 $routes->get('read_news/(:segment)', 'Home::read_news/$1');
 $routes->get('publish/(:segment)', 'Home::publish/$1');
+$routes->post('update_news', 'Auth::update_news');
+$routes->get('edit_news/(:segment)', 'Home::edit_news/$1');
+$routes->get('delete_news/(:segment)', 'Home::delete_news/$1');
+$routes->post('upload_video', 'Home::upload_video');
 
 
 

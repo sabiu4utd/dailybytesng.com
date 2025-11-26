@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pending News | Daily Bytes</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
  <style>
     :root {
@@ -277,7 +279,8 @@
                 <td><?php echo $new->firstname . ' ' . $new->surname . ' ' . $new->othername; ?></td>
                 <td class="text-end">
                   
-                  <a href="<?php echo site_url('read_news') ?>/<?php echo $new->newsid; ?>" class="btn btn-sm btn-primary">Open</a>
+                  <a href="<?php echo site_url('edit_news') ?>/<?php echo $new->newsid; ?>" style="font-size:10pt" class="btn btn-sm btn-danger" aria-label="Edit <?php echo esc($new->title); ?>"><i class="bi bi-pencil" aria-hidden="true"></i></a>
+                  <a href="<?php echo site_url('read_news') ?>/<?php echo $new->newsid; ?>" style="font-size:10pt" class="btn btn-sm btn-primary" aria-label="Open <?php echo esc($new->title); ?>"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
                 </td>
               </tr>
               <?php } ?>              

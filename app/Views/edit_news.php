@@ -34,15 +34,16 @@
     </div>
   </div>
   <div class="container py-4">
-    <h4 class="mb-3">Publish New Article</h4>
-    <form id="publishForm" method="POST" action="<?php echo site_url('post_news') ?>" enctype="multipart/form-data">
+    <h4 class="mb-3">Edit New Article</h4>
+    <form id="publishForm" method="POST" action="<?php echo site_url('update_news') ?>" enctype="multipart/form-data">
       <div class="mb-3">
         <label class="form-label">News Title</label>
-        <input id="title" name="title" type="text" class="form-control" placeholder="Enter headline">
+        <input id="title" name="title" type="text" class="form-control" value="<?php echo esc($news->title); ?>" >
       </div>
       <div class="mb-3">
         <label class="form-label">Category</label>
         <select id="category" name="categoryid" class="form-select">
+        <option value="<?php echo esc($news->categoryid); ?>" selected><?php echo esc($news->category); ?></option>
           <?php echo $categoryOptions; ?>
          
         </select>
@@ -55,7 +56,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label class="form-label">Upload Cover Picture</label>
+        <label class="form-label">Upload Cover Picture <span style='color:red'>[If you want change background picture, Please upload new one, otherwise ignore it]</span></label>
         <input type="file" class="form-control" name="cover_picture" accept="image/*">
       </div>
 
@@ -84,11 +85,16 @@
             <button class="ql-blockquote"></button>
           </span>
         </div>
-        <div id="editor"></div>
+        <div id="editor">
+        <?php echo $news->content; ?>
+        </div>
         <!-- Hidden field to submit HTML content -->
         <input type="hidden" name="content" id="contentInput">
       </div>
-      <button type="submit" class="btn btn-primary">Publish News</button>
+      <input type="hidden" name="posted_by" value="<?php echo esc($news->posted_by); ?>">
+        <input type="hidden" name="cover_picture" value="<?php echo esc($news->cover_picture); ?>">
+        <input type="hidden" name="newsid" value="<?php echo esc($news->newsid); ?>"> 
+      <button type="submit" class="btn btn-primary">Update News</button>
     </form>
   </div>
   <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>

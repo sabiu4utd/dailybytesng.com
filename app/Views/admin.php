@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -197,25 +199,8 @@
             </div>
 
             <div>
-              <h6 class="mb-2">Quick Actions</h6>
-              <div class="d-grid gap-2">
-                <?php if($_SESSION['role'] == 'author') { ?>
-                   <a href="<?php echo site_url('post_news') ?>" class="btn btn-primary">Post News Article</a>
-                  <?php } ?>
-                  <?php if($_SESSION['role'] == 'editor') { ?>
-                   <a href="<?php echo site_url('edit_news') ?>" class="btn btn-primary">Edit News Article</a>
-                  <?php } ?>
-                  <?php if($_SESSION['role'] == 'publisher') { ?>
-                    <a href="<?php echo site_url('publish_news') ?>" class="btn btn-primary">Publish News Article</a>
-                  <?php } ?>
-                  <?php if($_SESSION['role'] == 'admin') { ?>
-                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">Manage Users</button>
-                    <a href="<?php echo site_url('post_news') ?>" class="btn btn-primary">Post News Article</a>
-                     <a href="<?php echo site_url('publish_news') ?>" class="btn btn-primary">Publish News Article</a>
-                    <a href="<?php echo site_url('edit_news') ?>" class="btn btn-primary">Edit News Article</a>
-                  <?php } ?>
-                <a href="<?php echo site_url('change_password') ?>" class="btn btn-primary">Change Password</a>
-                <a href="<?php echo site_url('view_activity_log') ?>" class="btn btn-primary">View Activity Log</a>
+              <?php echo view('links.php') ?>
+              
                 
               </div>
             </div>
@@ -279,8 +264,9 @@
   </main>
 
   <footer class="text-center mt-4 mb-4 text-muted small">&copy; 2025 Daily Bytes. All rights reserved.</footer>
+  
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
   <!-- Upload Passport Modal -->
   <div class="modal fade" id="uploadPassportModal" tabindex="-1" aria-labelledby="uploadPassportModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -316,54 +302,7 @@
     </div>
   </div>
 
-  <!-- Create User Modal (static) -->
-  <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="createUserModalLabel">Create New User</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-2">
-              <label class="form-label">Full name</label>
-              <input class="form-control" placeholder="Enter full name" value="">
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Username</label>
-              <input class="form-control" placeholder="Username" value="">
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Email</label>
-              <input class="form-control" placeholder="email@example.com" value="">
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Phone</label>
-              <input class="form-control" placeholder="Phone number" value="">
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Role</label>
-              <select class="form-select">
-                <option>Administrator</option>
-                <option>Editor</option>
-                <option>Author</option>
-              </select>
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Passport (static)</label>
-              <input class="form-control" type="file" disabled>
-              <small class="text-muted">File input is disabled in this static demo.</small>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Create user</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     function previewImage(event) {
       const file = event.target.files[0];
@@ -383,5 +322,9 @@
     }
   </script>
 </body>
+
+
+
+
 
 </html>
