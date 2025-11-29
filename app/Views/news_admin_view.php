@@ -252,7 +252,7 @@
     <div class="container py-2 d-flex align-items-center justify-content-between">
       <div class="fw-semibold">Review Article</div>
       <div class="d-flex gap-2">
-        <a href="#" class="btn btn-info btn-sm">Make Comment</a>
+        <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Make Comment</a>
          <a href="<?php echo site_url('publish') ?>/<?php echo $news->newsid; ?>" class="btn btn-primary">Publish</a>
       </div>
     </div>
@@ -301,12 +301,21 @@
           <div class="small mb-1"><span class="text-muted">Email:</span> <?php echo $news->email; ?></div>
           <div class="small"><span class="text-muted">Role:</span> <?php echo $news->role; ?></div>
           
-          <!-- <hr>
+          <hr>
           <div>
-              <?php //echo view('links.php') ?>
+              <?php foreach ($comments as $comment): ?>
+                <div class="small mb-1"><span class="text-muted">Comment:</span> 
+                  <?php echo $comment->comment; ?>
+                </div>
+                <div class="small mb-1"><span class="text-muted">Commented on:</span> 
+                <?php 
+                  $date = new DateTime($comment->created_at);
+                  echo $date->format('d-m-Y - H:i:s'); 
+                ?>
+              <?php endforeach; ?>
                 
               </div>
-          </div> -->
+          </div> 
         </div>
 
       </div>
@@ -315,5 +324,34 @@
 
   <?php echo view('footer'); ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="<?php echo site_url('save_comment') ?>" method="POST">
+            <textarea name="comment" class="form-control" rows='10'></textarea>
+            <br />
+            <input type="hidden" value="<?php echo $news->newsid; ?>" name="newsid">
+            <input type="submit" value="POST" class="btn btn-primary">
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
 </body>
 </html>
+

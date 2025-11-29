@@ -107,8 +107,8 @@
         <h5 class="mb-0">Admin Profile</h5>
       </div>
       <nav>
-        <a class="btn btn-sm btn-outline-brand me-2" href="#">Dashboard</a>
-        <a class="btn btn-sm btn-outline-brand" href="<?php echo site_url('logout') ?>">Logout</a>
+       
+        <a class="btn btn-sm btn-outline-brand" href="<?php echo site_url('logout') ?>">Signout</a>
       </nav>
     </div>
   </header>
@@ -137,7 +137,7 @@
           </div>
           <div class="text-end">
             <small class="text-muted">Member since</small>
-            <div class="fw-bold"><?php echo $_SESSION['date_joined']; ?></div>
+            <div class="fw-bold"><?php echo date('d-m-Y', strtotime($_SESSION['date_joined'])); ?></div>
           </div>
         </div>
 
@@ -213,7 +213,7 @@
     <section class="mt-4 profile-card p-3">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="mb-0">Manage Users</h5>
-        <small class="text-muted">Static demo table — replace with dynamic data</small>
+
       </div>
 
       <div class="table-responsive">
@@ -222,7 +222,7 @@
             <tr>
               <th>Passport</th>
               <th>Full name</th>
-              <th>Username</th>
+             
               <th>Email</th>
               <th>Phone</th>
               <th>Role</th>
@@ -231,32 +231,21 @@
             </tr>
           </thead>
           <tbody>
+            <?php foreach($users as $user){ ?>
             <tr>
-              <td><img src="https://via.placeholder.com/48" class="rounded-circle" alt="p"></td>
-              <td>John Doe</td>
-              <td>johndoe</td>
-              <td>admin@dailybytesng.com</td>
-              <td>+234 800 000 0000</td>
-              <td>Administrator</td>
+              <td><img src="<?php echo base_url() ?>/assets/passport/<?php echo $user->passport_url; ?>" style="width:30px" class="rounded-circle" alt="passport"></td>
+              <td><?php echo $user->firstname." ".$user->surname." ".$user->othername; ?></td>
+             
+              <td><?php echo $user->email; ?></td>
+              <td><?php echo $user->phone; ?></td>
+              <td><?php echo $user->role; ?></td>
               <td><span class="badge bg-success">Active</span></td>
               <td class="text-end">
                 <button class="btn btn-sm btn-outline-secondary">Edit</button>
                 <button class="btn btn-sm btn-outline-danger">Delete</button>
               </td>
             </tr>
-            <tr>
-              <td><img src="https://via.placeholder.com/48" class="rounded-circle" alt="p"></td>
-              <td>Jane Smith</td>
-              <td>janesmith</td>
-              <td>jane@dailybytesng.com</td>
-              <td>+234 800 000 0001</td>
-              <td>Editor</td>
-              <td><span class="badge bg-warning text-dark">Pending</span></td>
-              <td class="text-end">
-                <button class="btn btn-sm btn-outline-secondary">Edit</button>
-                <button class="btn btn-sm btn-outline-danger">Delete</button>
-              </td>
-            </tr>
+           <?php } ?>
           </tbody>
         </table>
       </div>

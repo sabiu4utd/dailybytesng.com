@@ -14,7 +14,7 @@ class Category_model extends Model
     protected $returnType     = 'object';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['categoryid', 'category', 'created_at', 'updated_at', 'deleted_at'];
+    protected $allowedFields = ['categoryid', 'category', 'slug', 'created_at', 'updated_at', 'deleted_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

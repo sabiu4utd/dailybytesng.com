@@ -24,6 +24,18 @@ $routes->post('update_news', 'Auth::update_news');
 $routes->get('edit_news/(:segment)', 'Home::edit_news/$1');
 $routes->get('delete_news/(:segment)', 'Home::delete_news/$1');
 $routes->post('upload_video', 'Home::upload_video');
+$routes->get('view_video/(:segment)', 'Home::view_video/$1');
+$routes->get('publish_vid/(:segment)', 'Home::publish_vid/$1');
+$routes->get('edit_video/(:segment)', 'Home::edit_video/$1');
+$routes->post('update_video', 'Home::update_video');
+$routes->post('save_comment', 'Home::save_comment');
+$routes->get('mystories', 'Home::mystories');
+$routes->get('delete_news/(:segment)', 'Home:delete_news');
+$routes->post('user', 'Home::user');
+$routes->get('about', 'Home::about');
+$routes->get('category/(:segment)', 'Home::category/$1');
+$route->get('archive', 'Home::archive');
+
 
 
 

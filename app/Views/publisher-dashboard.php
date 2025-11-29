@@ -24,13 +24,13 @@
   <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid">
       <a class="navbar-brand fw-bold" href="#">Daily Bytes Publisher</a>
-      <a href="<?php echo site_url('logout') ?>" class="btn btn-light btn-sm">Logout</a>
+      <a href="<?php echo site_url('dashboard') ?>" class="btn btn-light btn-sm">Home</a>
     </div>
   </nav>
   <div class="bg-white border-bottom">
     <div class="container d-flex justify-content-between align-items-center py-2">
       <div class="fw-semibold text-secondary">Publisher Dashboard</div>
-      <a href="<?php echo site_url('logout') ?>" class="btn btn-sm btn-outline-primary">Logout</a>
+      <a href="<?php echo site_url('dashboard') ?>" class="btn btn-sm btn-outline-primary">Home</a>
     </div>
   </div>
   <div class="container py-4">

@@ -247,12 +247,12 @@
   </style>
 </head>
 <body>
-  <?php echo view('header'); ?>
+  <?php //echo view('header'); ?>
 
   <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4 class="mb-0">Pending News</h4>
-      <a href="<?php echo site_url('publish_news') ?>" class="btn btn-sm btn-outline-primary">Go to Publisher</a>
+      <h4 class="mb-0">Unpublished News</h4>
+      <a href="<?php echo site_url('dashboard') ?>" class="btn btn-sm btn-outline-primary">Home</a>
     </div>
 
     <div class="card">
@@ -273,9 +273,9 @@
               <?php foreach ($news as $new) { ?>
               <tr>
                 <td><img src="<?php echo base_url(); ?>assets/uploads/<?php echo $new->cover_picture; ?>" style="width:48px;height:36px;object-fit:cover" class="rounded" alt="thumb"></td>
-                <td class="fw-semibold"><?php echo $new->title; ?></td>
+                <td style="width:400px"><?php echo $new->title; ?></td>
                 <td><?php echo $new->category; ?></td>
-                <td><?php echo $new->created_at; ?></td>
+                 <td><?php echo date('d-m-Y', strtotime($new->created_at)); ?></td>
                 <td><?php echo $new->firstname . ' ' . $new->surname . ' ' . $new->othername; ?></td>
                 <td class="text-end">
                   
@@ -289,17 +289,48 @@
         </div>
       </div>
     </div>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="mb-0">Unpublished Videos</h4>
+      <a href="<?php echo site_url('dashboard') ?>" class="btn btn-sm btn-outline-primary">Home</a>
+    </div>
 
-    <!-- <div class="d-flex justify-content-between align-items-center mt-3">
-      <small class="text-muted">Showing 1–5 of 5 pending articles</small>
-      <nav>
-        <ul class="pagination pagination-sm mb-0">
-          <li class="page-item disabled"><span class="page-link">Prev</span></li>
-          <li class="page-item active"><span class="page-link">1</span></li>
-          <li class="page-item disabled"><span class="page-link">Next</span></li>
-        </ul>
-      </nav>
-    </div> -->
+    <div class="card">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead>
+              <tr>
+               <th style="width: 200px;"></th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Submitted</th>
+                <th>Author</th>
+                <th class="text-end">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($videos as $video) { ?>
+              <tr>
+                <td class="ratio ratio-16x9 mb-2" style="width: 400px;" ><?php echo $video->video_link; ?></td>
+                <td style="width:400px"><?php echo $video->title; ?></td>
+                <td><?php echo $video->category; ?></td>
+                <td><?php echo date('d-m-Y', strtotime($video->created_at)); ?></td>
+                <td><?php echo $video->firstname . ' ' . $video->surname . ' ' . $video->othername; ?></td>
+                <td class="text-end">
+                  
+                  <a href="<?php echo site_url('edit_video') ?>/<?php echo $video->videoid; ?>" style="font-size:10pt" class="btn btn-sm btn-danger" aria-label="Edit <?php echo esc($new->title); ?>"><i class="bi bi-pencil" aria-hidden="true"></i></a>
+                  <a href="<?php echo site_url('view_video') ?>/<?php echo $video->videoid; ?>" style="font-size:10pt" class="btn btn-sm btn-primary" aria-label="Open <?php echo esc($new->title); ?>"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
+                </td>
+              </tr>
+              <?php } ?>              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    
   </div>
 
   <?php echo view('footer'); ?>
