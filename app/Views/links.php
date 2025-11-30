@@ -24,14 +24,10 @@
                   <a href="<?php echo site_url('publish_news') ?>" class="btn btn-primary">Publish News Article</a>
                    <a href="<?php echo site_url('mystories') ?>" class="btn btn-primary">My Stories (<?php echo $_SESSION['mynews'] + $_SESSION['myvids'] ?>)</a>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadYoutubeModal">Upload YouTube Video</button>
-                    <a href="<?php echo site_url('archive') ?>" class="btn btn-primary">Archive</a>
+                    <a href="<?php echo site_url('archive') ?>" class="btn btn-primary">Archived News</a>
                   
                 <?php } ?>
-              
-               
-                
-
-                <a href="<?php echo site_url('change_password') ?>" class="btn btn-primary">Change Password</a>
+                <a href=""  data-bs-toggle="modal" data-bs-target="#changePasswordModal" class="btn btn-primary">Change Password</a>
                 <a href="<?php echo site_url('logout') ?>" class="btn btn-primary">Sign Out</a>
 
                 <!-- Create User Modal (static) -->
@@ -174,6 +170,38 @@
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">Upload Video</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Change Password Modal -->
+                <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" action="<?php echo site_url('changePassword') ?>">
+                          <div class="mb-2">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" class="form-control" name="current_password" placeholder="Enter current password">
+                          </div>
+                          <div class="mb-2">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-control" name="new_password" placeholder="Enter new password">
+                          </div>
+                          <div class="mb-2">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" name="confirm_password" placeholder="Confirm new password">
+                          </div>
+                          <button type="submit" class="btn btn-primary">Change Password</button>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>

@@ -85,7 +85,7 @@ class Home extends BaseController
         $category = new Category_model();
         $news = new News_model();
         $data['news'] = $news
-         ->select('newsid, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->select('newsid, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = news.posted_by')
             ->join('categories', 'categories.categoryid = news.categoryid')
             ->where('news.categoryid', $categoryid)
@@ -142,6 +142,7 @@ class Home extends BaseController
 
         $news = new News_model();
         $news->update($newsid, ['status' => 'Published']);
+        session()->setFlashdata('success', 'News published successfully');
         return redirect()->to('publish_news');
     }
     public function view_video($videoid)
@@ -154,11 +155,11 @@ class Home extends BaseController
             ->where('videoid', $videoid)
             ->first();
 
-            $comment = new Comment_model();
-            $data['comments'] = $comment
-                ->select('commentid, comment, newsid, created_at')
-                ->where('newsid', $videoid)
-                ->findAll();
+        $comment = new Comment_model();
+        $data['comments'] = $comment
+            ->select('commentid, comment, newsid, created_at')
+            ->where('newsid', $videoid)
+            ->findAll();
 
         return view('view_video', $data);
     }
@@ -167,6 +168,7 @@ class Home extends BaseController
 
         $video = new Video_model();
         $video->update($videoid, ['status' => 'Published']);
+        session()->setFlashdata('success', 'Video published successfully');
         return redirect()->to('publish_news');
     }
     public function edit_video($videoid)
@@ -206,6 +208,7 @@ class Home extends BaseController
             'created_at' => $created_at,
             'status' => $status,
         ]);
+        session()->setFlashdata('success', 'Video uploaded successfully');
         return redirect()->to('publish_news');
     }
     public function update_video()
@@ -225,7 +228,7 @@ class Home extends BaseController
         $video->set('uploaded_by', $uploaded_by);
         $video->set('status', $status);
         $video->update($this->request->getPost('videoid'));
-
+        session()->setFlashdata('success', 'Video updated successfully');
         return redirect()->to('publish_news');
     }
     public function save_comment()
@@ -242,6 +245,7 @@ class Home extends BaseController
             'newsid' => $newsid,
 
         ]);
+        session()->setFlashdata('success', 'Comment saved successfully');
         return redirect()->to('dashboard');
     }
     public function edit_news($newsid)
@@ -268,56 +272,59 @@ class Home extends BaseController
             ->join('categories', 'categories.categoryid = news.categoryid')
             ->where('news.posted_by', $this->session->get('userid'))
             ->findAll();
-            $videos = new Video_model();
-            $data['videos'] = $videos
+        $videos = new Video_model();
+        $data['videos'] = $videos
             ->select('videoid, title, video_link, videos.created_at, videos.uploaded_by, categories.categoryid, videos.description, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = videos.uploaded_by')
             ->join('categories', 'categories.categoryid = videos.categoryid')
             ->where('videos.uploaded_by', $this->session->get('userid'))
             ->findAll();
-            $data['categories'] = $category->findAll();
+        $data['categories'] = $category->findAll();
 
-           
-            //var_dump($data['videos']); exit;
+
+        //var_dump($data['videos']); exit;
         return view('mystories', $data);
     }
     public function delete_news($newsid)
     {
         $news = new News_model();
         $news->delete($newsid);
+        session()->setFlashdata('success', 'News deleted successfully');
         return redirect()->to('mystories');
     }
     public function delete_video($videoid)
     {
         $video = new Video_model();
         $video->delete($videoid);
+        session()->setFlashdata('success', 'Video deleted successfully');
         return redirect()->to('mystories');
     }
     public function user()
     {
-        
+
         $user = new Users_model();
         $profile = new Profile_model();
         $userid = Uuid::uuid4()->toString();
         $user->insert([
-            'userid'=>$userid,
-            'username'=>$this->request->getPost('email'),
+            'userid' => $userid,
+            'username' => $this->request->getPost('email'),
             'password' => hash('SHA512', $this->request->getPost('password')),
         ]);
         $profile->insert([
-            'profileid'=>Uuid::uuid4()->toString(),
-            'userid'=>$userid,
-            'firstname'=>$this->request->getPost('firstname'),
-            'surname'=>$this->request->getPost('surname'),
-            'othername'=>$this->request->getPost('othername'),
-            'email'=>$this->request->getPost('email'),
-            'phone'=>$this->request->getPost('phone'),
-            'state'=>$this->request->getPost('state'),
-            'role'=>$this->request->getPost('role'),
-            'dob'=>$this->request->getPost('dob'),
-            'gender'=>$this->request->getPost('gender'),
-            'passport'=>null,
+            'profileid' => Uuid::uuid4()->toString(),
+            'userid' => $userid,
+            'firstname' => $this->request->getPost('firstname'),
+            'surname' => $this->request->getPost('surname'),
+            'othername' => $this->request->getPost('othername'),
+            'email' => $this->request->getPost('email'),
+            'phone' => $this->request->getPost('phone'),
+            'state' => $this->request->getPost('state'),
+            'role' => $this->request->getPost('role'),
+            'dob' => $this->request->getPost('dob'),
+            'gender' => $this->request->getPost('gender'),
+            'passport' => null,
         ]);
+        session()->setFlashdata('success', 'User created successfully');
         return redirect()->to('dashboard');
     }
     public function about()
@@ -326,11 +333,11 @@ class Home extends BaseController
     }
     public function category($slug)
     {
-    $category = new Category_model();
-    $categoryid = $category->where('slug', $slug)->first()->categoryid;
-      $news = new News_model();
+        $category = new Category_model();
+        $categoryid = $category->where('slug', $slug)->first()->categoryid;
+        $news = new News_model();
         $data['news'] = $news
-        ->select('newsid, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->select('newsid, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = news.posted_by')
             ->join('categories', 'categories.categoryid = news.categoryid')
             ->where('news.categoryid', $categoryid)
@@ -338,11 +345,28 @@ class Home extends BaseController
             ->orderBy('news.created_at', 'DESC')
             ->findAll();
         $data['category_label'] = $category->where('categoryid', $categoryid)->first()->category;
-            return view('category_news', $data);
+        return view('category_news', $data);
     }
-    public function archive(){
-        //archive news
-        
+    public function archive()
+    {
+        // Move old published posts to Archived (older than 1 month)
+        $news = new News_model();
+        $news->query("UPDATE news SET status = 'Archived' WHERE status = 'published' AND created_at < DATE_SUB(NOW(), INTERVAL 1 MONTH)");
 
+        // Load categories (if you need them in the header/nav)
+        $category = new Category_model();
+        $data['categories'] = $category->findAll();
+
+        // Fetch archived news
+        $data['news'] = (new News_model())
+            ->select('newsid, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->join('profile', 'profile.userid = news.posted_by')
+            ->join('categories', 'categories.categoryid = news.categoryid')
+            ->where('news.status', 'Archived')
+            ->orderBy('news.created_at', 'DESC')
+            ->findAll();
+
+        $data['page_title'] = 'Archived News';
+        return view('archived', $data);
     }
 }

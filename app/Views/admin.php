@@ -107,7 +107,7 @@
         <h5 class="mb-0">Admin Profile</h5>
       </div>
       <nav>
-       
+
         <a class="btn btn-sm btn-outline-brand" href="<?php echo site_url('logout') ?>">Signout</a>
       </nav>
     </div>
@@ -126,12 +126,24 @@
           <h4 class="mb-0"><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['surname'] . ' ' . $_SESSION['othername']; ?></h4>
           <small><?php echo $_SESSION['role']; ?></small>
         </div>
-       
+
       </aside>
 
       <div class="p-4 flex-1">
+
         <div class="d-flex justify-content-between align-items-start mb-3">
+         
           <div>
+             <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger">
+              <?php echo session()->getFlashdata('error'); ?>
+            </div>
+          <?php endif; ?>
+           <?php if (session()->getFlashdata('success')): ?>
+            <div class="alert alert-success">
+              <?php echo session()->getFlashdata('success'); ?>
+            </div>
+          <?php endif; ?>
             <h5 class="mb-1">Profile Overview</h5>
             <p class="mb-0 text-muted">Basic and contact information</p>
           </div>
@@ -200,12 +212,12 @@
 
             <div>
               <?php echo view('links.php') ?>
-              
-                
-              </div>
+
+
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
 
@@ -222,7 +234,7 @@
             <tr>
               <th>Passport</th>
               <th>Full name</th>
-             
+
               <th>Email</th>
               <th>Phone</th>
               <th>Role</th>
@@ -231,21 +243,21 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach($users as $user){ ?>
-            <tr>
-              <td><img src="<?php echo base_url() ?>/assets/passport/<?php echo $user->passport_url; ?>" style="width:30px" class="rounded-circle" alt="passport"></td>
-              <td><?php echo $user->firstname." ".$user->surname." ".$user->othername; ?></td>
-             
-              <td><?php echo $user->email; ?></td>
-              <td><?php echo $user->phone; ?></td>
-              <td><?php echo $user->role; ?></td>
-              <td><span class="badge bg-success">Active</span></td>
-              <td class="text-end">
-                <button class="btn btn-sm btn-outline-secondary">Edit</button>
-                <button class="btn btn-sm btn-outline-danger">Delete</button>
-              </td>
-            </tr>
-           <?php } ?>
+            <?php foreach ($users as $user) { ?>
+              <tr>
+                <td><img src="<?php echo base_url() ?>/assets/passport/<?php echo $user->passport_url; ?>" style="width:30px" class="rounded-circle" alt="passport"></td>
+                <td><?php echo $user->firstname . " " . $user->surname . " " . $user->othername; ?></td>
+
+                <td><?php echo $user->email; ?></td>
+                <td><?php echo $user->phone; ?></td>
+                <td><?php echo $user->role; ?></td>
+                <td><span class="badge bg-success">Active</span></td>
+                <td class="text-end">
+                  <button class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <button class="btn btn-sm btn-outline-danger">Delete</button>
+                </td>
+              </tr>
+            <?php } ?>
           </tbody>
         </table>
       </div>
@@ -253,9 +265,9 @@
   </main>
 
   <footer class="text-center mt-4 mb-4 text-muted small">&copy; 2025 Daily Bytes. All rights reserved.</footer>
-  
 
-  
+
+
   <!-- Upload Passport Modal -->
   <div class="modal fade" id="uploadPassportModal" tabindex="-1" aria-labelledby="uploadPassportModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">

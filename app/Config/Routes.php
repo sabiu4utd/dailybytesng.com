@@ -34,7 +34,8 @@ $routes->get('delete_news/(:segment)', 'Home:delete_news');
 $routes->post('user', 'Home::user');
 $routes->get('about', 'Home::about');
 $routes->get('category/(:segment)', 'Home::category/$1');
-$route->get('archive', 'Home::archive');
+$routes->get('archive', 'Home::archive');
+$routes->post('changePassword', 'Auth::changePassword');
 
 
 

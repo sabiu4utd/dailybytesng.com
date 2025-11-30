@@ -254,7 +254,11 @@
       <h4 class="mb-0">Unpublished News</h4>
       <a href="<?php echo site_url('dashboard') ?>" class="btn btn-sm btn-outline-primary">Home</a>
     </div>
-
+    <?php if (session()->getFlashdata('success')) { ?>
+    <div class="alert alert-success">
+      <?php echo session()->getFlashdata('success'); ?>
+    </div>
+    <?php } ?>
     <div class="card">
       <div class="card-body p-0">
         <div class="table-responsive">

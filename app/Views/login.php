@@ -72,6 +72,11 @@
 </head>
 <body>
   <div class="login-box">
+    <?php if(session()->getFlashdata('error')): ?>
+    <div class="alert alert-danger">
+      <?php echo session()->getFlashdata('error'); ?>
+    </div>
+    <?php endif; ?>
     <div class="text-center mb-3">
       <img src="<?php echo base_url(); ?>assets/images/logo.jpg" alt="Daily Bytes" height="150">
       <!-- <h4 class="mt-2 text-primary">D Login</h4> -->

@@ -35,6 +35,7 @@
               <li><a class="dropdown-item" href="<?php echo site_url('category/fea') ?>">Features</a></li>
               <li><a class="dropdown-item" href="<?php echo site_url('category/jud') ?>">Judiciary</a></li>
               <li><a class="dropdown-item" href="<?php echo site_url('category/env') ?>">Environment</a></li>
+              <li><a class="dropdown-item" href="<?php echo site_url('archive') ?>">Archived</a></li>
               
             </ul>
           </li>

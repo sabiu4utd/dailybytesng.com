@@ -65,11 +65,11 @@ class Auth extends BaseController
                 return redirect()->to('dashboard');
             } else {
                 $session->setFlashdata('error', 'Invalid username or password');
-                return redirect()->to('/');
+                return redirect()->to('login');
             }
         } else {
             $session->setFlashdata('error', 'Invalid username or password');
-            return redirect()->to('/');
+            return redirect()->to('login');
         }
     }
     public function dashboard()
@@ -81,10 +81,10 @@ class Auth extends BaseController
         $data['categories'] = $category->findAll();
         $data['user'] = $user;
 
-       $data['users'] = $profile
+        $data['users'] = $profile
             ->join('users', 'users.userid = profile.userid')
             ->findAll();
-       // var_dump($users); exit;
+        // var_dump($users); exit;
 
         return view('admin', $data);
     }
@@ -111,7 +111,8 @@ class Auth extends BaseController
     {
         $session = session();
         $session->destroy();
-        return redirect()->to('/');
+         session()->setFlashdata('success', 'Logout successfully, Bye');
+        return redirect()->to('login');
     }
     public function save_news()
     {
@@ -132,7 +133,10 @@ class Auth extends BaseController
             'posted_by' => $session->get('userid'),
             'cover_picture' => $fileName,
         ]);
-
+        if($news){
+            session()->setFlashdata('success', 'News added successfully');
+            return redirect()->to('dashboard');
+        }
         return redirect()->to('dashboard');
     }
     public function update_news()
@@ -158,7 +162,11 @@ class Auth extends BaseController
             ->set('cover_picture', $fileName ?? $this->request->getPost('cover_picture'))
             ->where('newsid', $this->request->getPost('newsid'))
             ->update();
-        return redirect()->to('dashboard');
+        //return redirect()->to('dashboard');
+        if($news){
+            session()->setFlashdata('success', 'News updated successfully');
+            return redirect()->to('dashboard');
+        }
     }
     public function edit_news()
     {
@@ -172,6 +180,40 @@ class Auth extends BaseController
             ->set('cover_picture', $fileName ?? $this->request->getPost('cover_picture'))
             ->where('newsid', $this->request->getPost('newsid'))
             ->update();
-        return redirect()->to('dashboard');
+            if($news){
+                session()->setFlashdata('success', 'News updated successfully');
+                return redirect()->to('dashboard');
+            }
+        //return redirect()->to('dashboard');
+    }
+    public function changePassword()
+    {
+        $current_password = $this->request->getPost('current_password');
+        $new_password = $this->request->getPost('new_password');
+        $confirm_password = $this->request->getPost('confirm_password');
+
+        if ($new_password != $confirm_password) {
+            session()->setFlashdata('error', 'New password and confirm password do not match');
+            return redirect()->to('dashboard');
+        }
+
+        $users = new Users_model();
+
+        $session = session();
+
+        $user = $users->where('userid', $session->get('userid'))
+            ->where('password', hash('SHA512', $current_password))
+            ->first();
+
+        if (!$user) {
+            session()->setFlashdata('error', 'Current password is incorrect');
+            return redirect()->to('dashboard');
+        }
+        $update =  $users->where('userid', $session->get('userid'))->set(['password' => hash('SHA512', $this->request->getPost('new_password'))])->update();
+        // return redirect()->to('dashboard');
+        if ($update) {
+            session()->setFlashdata('success', 'Password changed successfully');
+            return redirect()->to('dashboard');
+        }
     }
 }

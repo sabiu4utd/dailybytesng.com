@@ -32,6 +32,11 @@
           <h5 class="mb-0">My News (<?php echo isset($news) ? count($news) : 0; ?>)</h5>
         </div>
         <div class="card-body">
+          <?php if (session()->getFlashdata('success')) { ?>
+          <div class="alert alert-success">
+            <?php echo session()->getFlashdata('success'); ?>
+          </div>
+          <?php } ?>
           <?php if (!empty($news)): ?>
             <div class="row g-3">
               <?php foreach ($news as $n): ?>
