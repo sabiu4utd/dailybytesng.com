@@ -92,7 +92,7 @@
       </div>
       <button class="btn btn-primary w-100">Login Securely</button>
     </form>
-    <a href="<?php echo site_url('register'); ?>" class="text-center mt-3"><a href="<?php echo site_url('register'); ?>" class="text-primary">Back</a></a>
+    <a href="<?php echo site_url('register'); ?>" class="text-center mt-3"><a href="<?php echo site_url('/'); ?>" class="text-primary">Back</a></a>
   </div>
 </body>
 </html>

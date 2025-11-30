@@ -20,12 +20,12 @@
             <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zM12 7.5A4.5 4.5 0 1 0 12 16.5 4.5 4.5 0 0 0 12 7.5zm0 2.1a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8zM17.8 6.1a.9.9 0 1 1-1.8 0 .9.9 0 0 1 1.8 0z" />
           </svg>
         </a>
-        <a href="https://www.youtube.com/@DailyBytesng" target="_blank" rel="noopener" aria-label="YouTube" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#fff;color:var(--primary-color, #2563eb);border:1px solid rgba(0,0,0,0.06);margin-left:8px;text-decoration:none;">
+        <a href="https://www.youtube.com/@dailybytesnewslive" target="_blank" rel="noopener" aria-label="YouTube" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#fff;color:var(--primary-color, #2563eb);border:1px solid rgba(0,0,0,0.06);margin-left:8px;text-decoration:none;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M23.5 6.2s-.2-1.6-.8-2.3c-.8-.9-1.7-.9-2.1-1C17.6 2.4 12 2.4 12 2.4s-5.6 0-8.5.5c-.4.1-1.4.2-2.1 1-.6.7-.8 2.3-.8 2.3S0 8.1 0 9.9v2.2C0 15.9 1.6 17.9 1.6 17.9s1.4.9 10.9.9c9.5 0 10.9-.9 10.9-.9s1.6-2 1.6-5.8V9.9c0-1.8-.2-3.7-.5-3.7zM9.5 15.5V8.5l6.1 3.5-6.1 3.5z" />
           </svg>
         </a>
-        <a href="https://www.tiktok.com/@DailyBytesng" target="_blank" rel="noopener" aria-label="TikTok" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#fff;color:var(--primary-color, #2563eb);border:1px solid rgba(0,0,0,0.06);margin-left:8px;text-decoration:none;">
+        <a href="https://www.tiktok.com/@dailybytesnewslive" target="_blank" rel="noopener" aria-label="TikTok" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#fff;color:var(--primary-color, #2563eb);border:1px solid rgba(0,0,0,0.06);margin-left:8px;text-decoration:none;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M17 3v7.5a4.5 4.5 0 1 1-3-4.24V6.5a6.5 6.5 0 1 0 3 0V3z" />
           </svg>
