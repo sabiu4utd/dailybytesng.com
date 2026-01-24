@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Review Article | Daily Bytes</title>
+  <link rel="icon" type="image/jpeg" href="<?= base_url('assets/images/logo.jpg') ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -253,7 +254,7 @@
       <div class="fw-semibold">Review Article</div>
       <div class="d-flex gap-2">
         <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Make Comment</a>
-         <a href="<?php echo site_url('publish') ?>/<?php echo $news->newsid; ?>" class="btn btn-primary">Publish</a>
+         <a href="<?php echo site_url('publish') ?>/<?php echo $news->slug; ?>" class="btn btn-primary">Publish</a>
       </div>
     </div>
   </div>
@@ -282,7 +283,7 @@
 
           <div class="d-flex gap-2 mt-3">
             <a href="#" class="btn btn-outline-danger">Decline</a>
-            <a href="<?php echo site_url('publish') ?>/<?php echo $news->newsid; ?>" class="btn btn-primary">Publish</a>
+            <a href="<?php echo site_url('publish') ?>/<?php echo $news->slug; ?>" class="btn btn-primary">Publish</a>
           </div>
         </div>
       </div>

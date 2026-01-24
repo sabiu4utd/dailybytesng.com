@@ -36,6 +36,9 @@ $routes->get('about', 'Home::about');
 $routes->get('category/(:segment)', 'Home::category/$1');
 $routes->get('archive', 'Home::archive');
 $routes->post('changePassword', 'Auth::changePassword');
+// Sitemap route
+$routes->get('sitemap.xml', 'Sitemap::index');
+$routes->post('search', 'Home::search');
 
 
 

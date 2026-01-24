@@ -16,34 +16,50 @@ class Home extends BaseController
     {
         $news = new News_model();
         $video = new Video_model();
-        $data['news'] = $news
-            ->select('newsid, title, content, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername')
+        $data['breaking_news'] = $news
+            ->select('newsid, news.slug, title, content, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername')
             ->join('profile', 'profile.userid = news.posted_by')
             ->where('news.breaking_news', 'Yes')
             ->where('news.status', 'published')
             ->orderBy('news.created_at', 'DESC')
-            ->limit(1)
-            ->first();
+            ->limit(3)
+            ->findAll();
 
         $data['latest_news'] = $news
-            ->select('newsid, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->select('newsid, news.slug, title, content, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = news.posted_by')
             ->join('categories', 'categories.categoryid = news.categoryid')
             ->where('news.breaking_news', 'No')
             ->where('news.status', 'published')
             ->orderBy('news.created_at', 'DESC')
-            ->limit(10)
+            ->limit(20)
             ->findAll();
 
         //load the most recent disticnt categories 
 
-        $sql = "SELECT categories.category, categories.categoryid, title, news.created_at, cover_picture
-        FROM news
-        JOIN categories ON categories.categoryid = news.categoryid
-        JOIN profile ON profile.userid = news.posted_by
-        WHERE news.breaking_news = 'No' AND news.status = 'published'
-        GROUP BY categories.categoryid
-        ORDER BY news.created_at DESC";
+        $sql = "SELECT category, categoryid, title, slug, created_at, cover_picture
+FROM (
+    SELECT 
+        c.category,
+        c.categoryid,
+        n.title,
+        n.slug,
+        n.created_at,
+        n.cover_picture,
+        ROW_NUMBER() OVER (
+            PARTITION BY c.categoryid 
+            ORDER BY n.created_at DESC
+        ) AS rn
+    FROM news n
+    JOIN categories c ON c.categoryid = n.categoryid
+    JOIN profile p ON p.userid = n.posted_by
+    WHERE n.breaking_news = 'No'
+      AND n.status = 'published'
+) x
+WHERE rn = 1
+ORDER BY created_at DESC
+LIMIT 15;
+";
         $data['categories'] = $news->db->query($sql)->getResult();
 
         $data['videos'] = $video
@@ -58,18 +74,29 @@ class Home extends BaseController
 
         return view('index', $data);
     }
-    public function single_news($newsid)
+    public function single_news($segment)
     {
         $news = new News_model();
+
+        // Try to find by slug first, then fallback to newsid
         $data['news'] = $news
-            ->select('newsid, title, content, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->select('newsid, news.slug, title, content, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = news.posted_by')
             ->join('categories', 'categories.categoryid = news.categoryid')
-            ->where('newsid', $newsid)
+            ->where('news.slug', $segment)
             ->first();
 
+        if (!$data['news']) {
+            $data['news'] = $news
+                ->select('newsid, news.slug, title, content, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+                ->join('profile', 'profile.userid = news.posted_by')
+                ->join('categories', 'categories.categoryid = news.categoryid')
+                ->where('news.newsid', $segment)
+                ->first();
+        }
+
         $data['latest_news'] = $news
-            ->select('newsid, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->select('newsid, news.slug, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = news.posted_by')
             ->join('categories', 'categories.categoryid = news.categoryid')
             ->where('news.breaking_news', 'No')
@@ -85,7 +112,7 @@ class Home extends BaseController
         $category = new Category_model();
         $news = new News_model();
         $data['news'] = $news
-            ->select('newsid, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->select('newsid, news.slug, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = news.posted_by')
             ->join('categories', 'categories.categoryid = news.categoryid')
             ->where('news.categoryid', $categoryid)
@@ -101,7 +128,7 @@ class Home extends BaseController
     {
         $news = new News_model();
         $data['news'] = $news
-            ->select('newsid, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->select('newsid, news.slug, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = news.posted_by')
             ->join('categories', 'categories.categoryid = news.categoryid')
             ->where('news.status', 'Pending')
@@ -119,29 +146,34 @@ class Home extends BaseController
 
         return view('publisher-dashboards', $data);
     }
-    public function read_news($newsid)
+    public function read_news($slug)
     {
         $news = new News_model();
         $data['news'] = $news
-            ->select('newsid, title, content, status, cover_picture, news.created_at, email, role, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->select('newsid, news.slug, title, content, status, cover_picture, news.created_at, email, role, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = news.posted_by')
             ->join('categories', 'categories.categoryid = news.categoryid')
-            ->where('newsid', $newsid)
+            ->where('news.slug', $slug)
             ->first();
 
         $comment = new Comment_model();
         $data['comments'] = $comment
             ->select('commentid, comment, newsid, created_at')
-            ->where('newsid', $newsid)
+            ->where('newsid', $news->newsid)
             ->findAll();
 
         return view('news_admin_view', $data);
     }
-    public function publish($newsid)
+    public function publish($slug)
     {
 
         $news = new News_model();
-        $news->update($newsid, ['status' => 'Published']);
+        $news
+            ->set('status', 'Published')
+            ->where('slug', $slug)
+            ->update();
+
+
         session()->setFlashdata('success', 'News published successfully');
         return redirect()->to('publish_news');
     }
@@ -248,14 +280,14 @@ class Home extends BaseController
         session()->setFlashdata('success', 'Comment saved successfully');
         return redirect()->to('dashboard');
     }
-    public function edit_news($newsid)
+    public function edit_news($slug)
     {
         $news = new News_model();
         $data['news'] = $news
-            ->select('newsid, title, content, status, cover_picture, news.posted_by, news.categoryid, news.created_at, email, role, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->select('newsid, news.slug, title, content, status, cover_picture, news.posted_by, news.categoryid, news.created_at, email, role, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = news.posted_by')
             ->join('categories', 'categories.categoryid = news.categoryid')
-            ->where('newsid', $newsid)
+            ->where('news.slug', $slug)
             ->first();
         $category = new Category_model();
         $data['categories'] = $category->findAll();
@@ -267,11 +299,28 @@ class Home extends BaseController
         $data['categories'] = $category->findAll();
         $news = new News_model();
         $data['news'] = $news
-            ->select('newsid, title, content, status, cover_picture, news.posted_by, news.categoryid, news.created_at, email, role, profile.firstname, profile.surname, profile.othername, categories.category')
-            ->join('profile', 'profile.userid = news.posted_by')
-            ->join('categories', 'categories.categoryid = news.categoryid')
-            ->where('news.posted_by', $this->session->get('userid'))
-            ->findAll();
+    ->select('
+        news.newsid,
+        news.deleted_at,
+        news.slug,
+        news.title,
+        news.content,
+        news.status,
+        news.cover_picture,
+        news.posted_by,
+        news.categoryid,
+        news.created_at,
+        profile.firstname,
+        profile.surname,
+        profile.othername,
+        categories.category
+    ')
+    ->join('profile', 'profile.userid = news.posted_by')
+    ->join('categories', 'categories.categoryid = news.categoryid')
+    ->where('news.posted_by', $this->session->get('userid'))
+    ->where('news.deleted_at', null)
+    ->findAll();
+
         $videos = new Video_model();
         $data['videos'] = $videos
             ->select('videoid, title, video_link, videos.created_at, videos.uploaded_by, categories.categoryid, videos.description, profile.firstname, profile.surname, profile.othername, categories.category')
@@ -285,10 +334,10 @@ class Home extends BaseController
         //var_dump($data['videos']); exit;
         return view('mystories', $data);
     }
-    public function delete_news($newsid)
+    public function delete_news($slug)
     {
         $news = new News_model();
-        $news->delete($newsid);
+        $news->where('slug', $slug)->delete();
         session()->setFlashdata('success', 'News deleted successfully');
         return redirect()->to('mystories');
     }
@@ -337,7 +386,7 @@ class Home extends BaseController
         $categoryid = $category->where('slug', $slug)->first()->categoryid;
         $news = new News_model();
         $data['news'] = $news
-            ->select('newsid, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->select('newsid, news.slug, title, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
             ->join('profile', 'profile.userid = news.posted_by')
             ->join('categories', 'categories.categoryid = news.categoryid')
             ->where('news.categoryid', $categoryid)
@@ -368,5 +417,21 @@ class Home extends BaseController
 
         $data['page_title'] = 'Archived News';
         return view('archived', $data);
+    }
+    public function search()
+    {
+        $query = $this->request->getPost('q');
+        $news = new News_model();
+        $escaped = $news->escape($query);
+        $data['news'] = $news
+            ->select('newsid, news.slug, title, content, cover_picture, news.created_at, profile.firstname, profile.surname, profile.othername, categories.category')
+            ->join('profile', 'profile.userid = news.posted_by')
+            ->join('categories', 'categories.categoryid = news.categoryid')
+            ->where("MATCH (title, content) AGAINST ($escaped IN NATURAL LANGUAGE MODE)")
+            ->orderBy('news.created_at', 'DESC')
+            ->findAll();
+        $data['search_query'] = $query;
+
+        return view('search_results', $data);
     }
 }

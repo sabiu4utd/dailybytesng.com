@@ -7,6 +7,7 @@ use App\Models\Profile_model;
 use App\Models\Category_model;
 use App\Models\News_model;
 use App\Models\Video_model;
+use App\Helpers\SlugHelper;
 use Ramsey\Uuid\Uuid;
 
 class Auth extends BaseController
@@ -30,7 +31,10 @@ class Auth extends BaseController
         $user = $users
             ->join('profile', 'profile.userid = users.userid')
             ->where('username', $this->request->getPost('username'))->first();
-
+        if (!$user) {
+            $session->setFlashdata('error', 'Invalid username or password');
+            return redirect()->to('login');
+        }
         $news = new News_model();
         $all =  $news
             ->where('posted_by', $user->userid)
@@ -111,7 +115,7 @@ class Auth extends BaseController
     {
         $session = session();
         $session->destroy();
-         session()->setFlashdata('success', 'Logout successfully, Bye');
+        session()->setFlashdata('success', 'Logout successfully, Bye');
         return redirect()->to('login');
     }
     public function save_news()
@@ -123,9 +127,14 @@ class Auth extends BaseController
         $fileName = $file->getRandomName();
         $file->move('assets/uploads', $fileName);
 
+        $title = $this->request->getPost('title');
+        $slug = SlugHelper::generate($title);
+        //var_dump($slug); exit;
+
         $news->insert([
             'newsid' => Uuid::uuid4()->toString(),
-            'title' => $this->request->getPost('title'),
+            'slug' => $slug,
+            'title' => $title,
             'content' => $this->request->getPost('content'),
             'categoryid' => $this->request->getPost('categoryid'),
             'status' => 'pending',
@@ -133,7 +142,7 @@ class Auth extends BaseController
             'posted_by' => $session->get('userid'),
             'cover_picture' => $fileName,
         ]);
-        if($news){
+        if ($news) {
             session()->setFlashdata('success', 'News added successfully');
             return redirect()->to('dashboard');
         }
@@ -152,8 +161,12 @@ class Auth extends BaseController
             $fileName = $file->getRandomName();
             $file->move('assets/uploads', $fileName);
         }
+        $title = $this->request->getPost('title');
+        $slug = SlugHelper::generate($title);
+        
         $news
-            ->set('title', $this->request->getPost('title'))
+            ->set('slug', $slug)
+            ->set('title', $title)
             ->set('content', $this->request->getPost('content'))
             ->set('categoryid', $this->request->getPost('categoryid'))
             ->set('status', 'pending')
@@ -163,7 +176,7 @@ class Auth extends BaseController
             ->where('newsid', $this->request->getPost('newsid'))
             ->update();
         //return redirect()->to('dashboard');
-        if($news){
+        if ($news) {
             session()->setFlashdata('success', 'News updated successfully');
             return redirect()->to('dashboard');
         }
@@ -180,10 +193,10 @@ class Auth extends BaseController
             ->set('cover_picture', $fileName ?? $this->request->getPost('cover_picture'))
             ->where('newsid', $this->request->getPost('newsid'))
             ->update();
-            if($news){
-                session()->setFlashdata('success', 'News updated successfully');
-                return redirect()->to('dashboard');
-            }
+        if ($news) {
+            session()->setFlashdata('success', 'News updated successfully');
+            return redirect()->to('dashboard');
+        }
         //return redirect()->to('dashboard');
     }
     public function changePassword()

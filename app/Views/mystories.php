@@ -11,6 +11,7 @@
 <head>
   <meta charset="UTF-8">
   <title>My Stories | Daily Bytes</title>
+  <link rel="icon" type="image/jpeg" href="<?= base_url('assets/images/logo.jpg') ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -54,9 +55,9 @@
                         - Status: <?php echo esc($n->status); ?>
                       </div>
                       <div class="mt-auto d-flex gap-2">
-                        <a href="<?php echo site_url('read_news/' . $n->newsid); ?>" class="btn btn-outline-primary btn-sm">View</a>
-                        <a href="<?php echo site_url('edit_news/' . $n->newsid); ?>" class="btn btn-outline-secondary btn-sm">Edit</a>
-                        <a href="<?php echo site_url('delete_news/' . $n->newsid); ?>" class="btn btn-outline-danger btn-sm">Delete</a>
+                        <a href="<?php echo site_url('read_news/' . $n->slug); ?>" class="btn btn-outline-primary btn-sm">View</a>
+                        <a href="<?php echo site_url('edit_news/' . $n->slug); ?>" class="btn btn-outline-secondary btn-sm">Edit</a>
+                        <a href="<?php echo site_url('delete_news/' . $n->slug); ?>" class="btn btn-outline-danger btn-sm">Delete</a>
                       </div>
                     </div>
                   </div>

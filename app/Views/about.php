@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us | Daily Bytes</title>
+  <link rel="icon" type="image/jpeg" href="<?= base_url('assets/images/logo.jpg') ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -139,7 +140,9 @@
       <div class="row justify-content-center">
         <div class="col-lg-8">
           <h1 class="display-4 fw-bold mb-4 animate__animated animate__fadeInDown">About Daily Bytes</h1>
-          <p class="lead mb-0 animate__animated animate__fadeInUp animate__delay-1s">Delivering concise, credible, and compelling journalism in Nigeria's digital news space</p>
+          <p class="lead mb-0 animate__animated animate__fadeInUp animate__delay-1s">
+            Delivering conscise, credible, and compelling journalism in Nigeria's digital news space.
+          </p>
         </div>
       </div>
     </div>
@@ -151,15 +154,20 @@
       <div class="row g-4">
         <div class="col-12 text-center mb-5">
           <h2 class="section-title h1">Our Story</h2>
-          <p class="lead text-muted">Committed to excellence in journalism since our inception</p>
+          <p class="lead text-muted">
+           DailyBytes was founded on a commitment to excellence in digital journalism. Since our inception, we have focused on providing reliable information that empowers citizens and strengthens public understanding.
+          </p>
         </div>
 
         <div class="col-lg-6">
           <div class="card h-100 animate-on-scroll">
             <div class="card-body">
               <h3 class="h4 mb-4">Who We Are</h3>
-              <p class="mb-4">Daily Bytes is a leading digital news platform in Nigeria, dedicated to delivering timely, factual, and engaging stories that inform public understanding and promote accountability across various sectors.</p>
-              <p>Our team of experienced journalists and editors work around the clock to bring you the most relevant and accurate news from Nigeria and beyond.</p>
+              <p class="mb-4" style="text-align: justify;">
+                Daily Bytes is a digital news platform in Nigeria dedicated to delivering timely, factual and engaging stories that inform public understanding and promote accountability across various sectors. </p>
+
+              <p class="mb-4" style="text-align: justify;">Our team of experienced journalists is committed to bringing you accurate reports, thoughtful analysis and meaningful insights from across the country and beyond. </p>
+
             </div>
           </div>
         </div>
@@ -168,8 +176,9 @@
           <div class="card h-100 animate-on-scroll">
             <div class="card-body">
               <h3 class="h4 mb-4">Our Mission</h3>
-              <p class="mb-4">To be the most trusted source of news and information in Nigeria, providing our readers with accurate, balanced, and insightful journalism that makes a difference in their lives.</p>
-              <p>We believe in the power of information to transform societies and are committed to upholding the highest standards of journalistic integrity.</p>
+              <p class="mb-4">
+                To be the most trusted source of news and information in Nigeria, providing our readers with accurate, balanced and insightful journalism.</p>
+              
             </div>
           </div>
         </div>
@@ -231,14 +240,14 @@
                     <a href="mailto:advert@dailybytesng.com" class="text-decoration-none">advert@dailybytesng.com</a>
                   </div>
                 </li>
-                <li class="mb-3">
+                <!-- <li class="mb-3">
                   <i class="fas fa-phone-alt"></i>
                   <div>
                     <h5 class="h6 mb-1">Phone</h5>
-                    <a href="tel:+2349028281293" class="text-decoration-none">+234 902 828 1293</a> 
+                    <a href="tel:+70000000" class="text-decoration-none">+234 902 828 1293</a> 
                     
                   </div>
-                </li>
+                </li> -->
                 <!-- <li>
                   <i class="fas fa-map-marker-alt"></i>
                   <div>

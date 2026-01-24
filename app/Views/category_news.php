@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daily Bytes | <?php echo esc($category_label ?? 'Category'); ?></title>
+  <link rel="icon" type="image/jpeg" href="<?= base_url('assets/images/logo.jpg') ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -243,9 +244,9 @@
   </style>
 </head>
 <body>
-
+<div style="margin-top: -40px; ">
   <?php echo view('header'); ?>
-
+</div>  
   <div class="container py-4">
     <div class="d-flex align-items-center justify-content-between mb-3">
       <h3 class="mb-0 fw-bold"><?php echo esc($category_label ?? 'Category'); ?></h3>
@@ -269,7 +270,7 @@
               </div>
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title mb-2">
-                  <a href="<?php echo base_url(); ?>single_news/<?php echo $item->newsid; ?>" class="text-decoration-none text-dark">
+                  <a href="<?php echo base_url(); ?>single_news/<?php echo $item->slug; ?>" class="text-decoration-none text-dark">
                     <?php echo esc($item->title); ?>
                   </a>
                 </h5>
@@ -304,7 +305,7 @@
                   ?>
                 </div>
                 <div class="mt-auto">
-                  <a href="<?php echo base_url(); ?>single_news/<?php echo $item->newsid; ?>" class="btn btn-sm btn-primary">
+                  <a href="<?php echo base_url(); ?>single_news/<?php echo $item->slug; ?>" class="btn btn-sm btn-primary">
                     Read more
                   </a>
                 </div>

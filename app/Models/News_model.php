@@ -14,7 +14,7 @@ class News_model extends Model
     protected $returnType     = 'object';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['newsid',	'title', 'content',	'categoryid',	'status', 'posted_by', 'breaking_news', 'cover_picture',	'created_at',	'updated_at',	'deleted_at'];
+    protected $allowedFields = ['newsid', 'slug',	'title', 'content',	'categoryid',	'status', 'posted_by', 'breaking_news', 'cover_picture',	'created_at',	'updated_at',	'deleted_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

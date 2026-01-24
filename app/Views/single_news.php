@@ -1,11 +1,31 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daily Bytes | News Detail</title>
+
+
+
+
+
+  <title>Daily Bytes | <?php echo $news->title; ?></title>
+  <meta property="og:title" content="<?php echo $news->title; ?>">
+  <meta property="og:description" content="<?php echo substr(strip_tags($news->content), 0, 160); ?>...">
+  <meta property="og:image" content="<?php echo base_url() . 'assets/uploads/' . $news->cover_picture; ?>">
+  <meta property="og:url" content="<?php echo base_url() . 'single_news/' . $news->newsid; ?>">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<?php echo $news->title; ?>">
+  <meta name="twitter:description" content="<?php echo substr(strip_tags($news->content), 0, 160); ?>...">
+  <meta name="twitter:image" content="<?php echo base_url() . 'assets/uploads/' . $news->cover_picture; ?>">
+  <link rel="icon" type="image/jpeg" href="<?= base_url('assets/images/logo.jpg') ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary-color: #2563eb;
@@ -246,22 +266,49 @@
   
 
   <!-- Navigation Menu -->
+   <div style="margin-top: -40px; ">
   <?php echo view('header'); ?>
+    </div>
   <div class="container py-4">
     <div class="row">
       <div class="col-lg-8">
         <h2 class="fw-bold"><?php echo $news->title; ?></h2>
+        
         <p class="text-muted">Published on <?php echo $date = date('F j, Y', strtotime($news->created_at)); ?> | By <?php echo $news->firstname; ?> <?php echo $news->surname; ?></p>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <p class="card-text">Share with friends:</p>
+          <div class="btn-group">
+            <a href="https://www.facebook.com/sharer.php?u=<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>&picture=<?php echo urlencode(base_url() . 'assets/uploads/' . $news->cover_picture); ?>" target="_blank" class="btn btn-primary"><i class="fab fa-facebook"></i></a>
+            <a href="https://wa.me/?text=📰 *<?php echo urlencode($news->title); ?>*%0A%0A<?php echo urlencode(substr(strip_tags($news->content), 0, 100)); ?>...%0A%0A<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp-square"></i></a>
+            <a href="https://twitter.com/intent/tweet?text=<?php echo $news->title; ?>&url=<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" target="_blank" class="btn btn-primary"><i class="fab fa-twitter-square"></i></a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>&title=<?php echo $news->title; ?>&source=<?php echo urlencode(base_url() . 'assets/uploads/' . $news->cover_picture); ?>" target="_blank" class="btn btn-primary"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/sharer.php?u=<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" target="_blank" class="btn btn-primary"><i class="fab fa-instagram-square"></i></a>
+          </div>
+        </div>
         <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $news->cover_picture; ?>" class="img-fluid rounded mb-3 news-image" alt="news">
+        <h6 class="text-muted">dailybytesng.com</h6>
+        <h3 class="fw-bold"><?php echo $news->title; ?> - <span class="text-muted">Dailybytes NG</span> </h3>
         <div class="article-body" style="text-align: justify;">
-         <?php echo $news->content; ?>
+         <?php echo preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i', '', $news->content); ?>
+         
+
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <p class="card-text">Share with friends:</p>
+          <div class="btn-group">
+            <a href="https://www.facebook.com/sharer.php?u=<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>&picture=<?php echo urlencode(base_url() . 'assets/uploads/' . $news->cover_picture); ?>" target="_blank" class="btn btn-primary"><i class="fab fa-facebook"></i></a>
+            <a href="https://wa.me/?text=📰 *<?php echo urlencode($news->title); ?>*%0A%0A<?php echo urlencode(substr(strip_tags($news->content), 0, 100)); ?>...%0A%0A<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp-square"></i></a>
+            <a href="https://twitter.com/intent/tweet?text=<?php echo $news->title; ?>&url=<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" target="_blank" class="btn btn-primary"><i class="fab fa-twitter-square"></i></a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>&title=<?php echo $news->title; ?>&source=<?php echo urlencode(base_url() . 'assets/uploads/' . $news->cover_picture); ?>" target="_blank" class="btn btn-primary"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/sharer.php?u=<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" target="_blank" class="btn btn-primary"><i class="fab fa-instagram-square"></i></a>
+          </div>
         </div>
       </div>
       <div class="col-lg-4">
         <h5 class="fw-bold border-bottom pb-2 mb-3">More Stories</h5>
         <div class="list-group">
           <?php foreach ($latest_news as $news) { ?>
-          <a href="<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" class="list-group-item list-group-item-action d-flex align-items-center">
+          <a href="<?php echo base_url(); ?>single_news/<?php echo $news->slug; ?>" class="list-group-item list-group-item-action d-flex align-items-center">
             <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $news->cover_picture; ?>" alt="thumb" class="rounded" style="width:72px;height:50px;object-fit:cover">
             <div class="ms-3">
               <!-- <div class="small text-uppercase text-muted"><?php echo $news->category; ?></div> -->
@@ -328,5 +375,6 @@
     
   </div>
   <?php echo view('footer'); ?>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

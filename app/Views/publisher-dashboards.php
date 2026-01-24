@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pending News | Daily Bytes</title>
+  <link rel="icon" type="image/jpeg" href="<?= base_url('assets/images/logo.jpg') ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -283,8 +284,8 @@
                 <td><?php echo $new->firstname . ' ' . $new->surname . ' ' . $new->othername; ?></td>
                 <td class="text-end">
                   
-                  <a href="<?php echo site_url('edit_news') ?>/<?php echo $new->newsid; ?>" style="font-size:10pt" class="btn btn-sm btn-danger" aria-label="Edit <?php echo esc($new->title); ?>"><i class="bi bi-pencil" aria-hidden="true"></i></a>
-                  <a href="<?php echo site_url('read_news') ?>/<?php echo $new->newsid; ?>" style="font-size:10pt" class="btn btn-sm btn-primary" aria-label="Open <?php echo esc($new->title); ?>"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
+                  <a href="<?php echo site_url('edit_news') ?>/<?php echo $new->slug; ?>" style="font-size:10pt" class="btn btn-sm btn-danger" aria-label="Edit <?php echo esc($new->title); ?>"><i class="bi bi-pencil" aria-hidden="true"></i></a>
+                  <a href="<?php echo site_url('read_news') ?>/<?php echo $new->slug; ?>" style="font-size:10pt" class="btn btn-sm btn-primary" aria-label="Open <?php echo esc($new->title); ?>"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
                 </td>
               </tr>
               <?php } ?>              
@@ -323,8 +324,8 @@
                 <td><?php echo $video->firstname . ' ' . $video->surname . ' ' . $video->othername; ?></td>
                 <td class="text-end">
                   
-                  <a href="<?php echo site_url('edit_video') ?>/<?php echo $video->videoid; ?>" style="font-size:10pt" class="btn btn-sm btn-danger" aria-label="Edit <?php echo esc($new->title); ?>"><i class="bi bi-pencil" aria-hidden="true"></i></a>
-                  <a href="<?php echo site_url('view_video') ?>/<?php echo $video->videoid; ?>" style="font-size:10pt" class="btn btn-sm btn-primary" aria-label="Open <?php echo esc($new->title); ?>"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
+                  <a href="<?php echo site_url('edit_video') ?>/<?php echo $video->videoid; ?>" style="font-size:10pt" class="btn btn-sm btn-danger" aria-label="Edit <?php echo esc($video->title); ?>"><i class="bi bi-pencil" aria-hidden="true"></i></a>
+                  <a href="<?php echo site_url('view_video') ?>/<?php echo $video->videoid; ?>" style="font-size:10pt" class="btn btn-sm btn-primary" aria-label="Open <?php echo esc($video->title); ?>"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
                 </td>
               </tr>
               <?php } ?>              

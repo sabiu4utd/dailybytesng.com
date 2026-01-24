@@ -7,8 +7,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daily Bytes | Home</title>
+  <link rel="icon" type="image/jpeg" href="<?= base_url('assets/images/logo.jpg') ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary-color: #2563eb;
@@ -242,13 +244,34 @@
       .latest-list .list-group-item {
         padding: .5rem;
       }
+
+      /* Reorder columns on mobile: Breaking News first, then Categories, then Latest News */
+      .row.g-4 > aside:first-child {
+        order: 2;
+      }
+
+      .row.g-4 > main {
+        order: 1;
+      }
+
+      /* mobile videos block should appear after categories on small screens */
+      .row.g-4 > .mobile-videos {
+        order: 3;
+      }
+
+      .row.g-4 > aside:last-child {
+        order: 4;
+      }
     }
   </style>
 </head>
 
 <body>
   <!-- Logo Section -->
+   <div style="margin-top: -40px; ">
   <?php echo view('header'); ?>
+   </div>
+  
   <section class="container py-4">
     <div class="row g-4">
       <!-- Column 1: Category News -->
@@ -325,40 +348,65 @@
         </div>
       </aside>
 
-      <!-- Column 2: Breaking News (featured) -->
-      <?php if ($news) { ?>
-        <main class="col-lg-6">
-          <div class="card border-0 shadow-sm breaking-card mb-4">
-            <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $news->cover_picture; ?>" class="card-img-top object-fit-cover" alt="Breaking Image" style="max-height:360px;">
+      <!-- Mobile-only Videos (appears after Categories on small screens) -->
+      <div class="col-12 mobile-videos d-block d-lg-none">
+        <?php if (isset($videos) && !empty($videos)) { ?>
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-0">
+              <h5 class="mb-0 fw-bold text-primary">Videos</h5>
+            </div>
             <div class="card-body">
-              <span class="badge bg-primary mb-2">Breaking</span>
-              <h3 class="card-title">Breaking: <?php echo $news->title; ?></h3>
-              <p class="text-muted">
-
-                <?php echo $date = date('F j, Y', strtotime($news->created_at)); ?> | By <strong><?php echo $news->firstname; ?> <?php echo $news->surname; ?></strong>
-
-              </p>
-                <p class="card-text"><?php echo implode('</p><p class="card-text">', array_slice(explode('</p>', $news->content, 4), 0, 3)); ?></p>
-              <a href="<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" class="btn btn-primary">Read Full Story</a>
+              <div class="row g-3">
+                <?php foreach ($videos as $video) { ?>
+                  <div class="col-12">
+                    <div class="ratio ratio-16x9 mb-2">
+                      <?php echo $video->video_link; ?>
+                    </div>
+                    <h6 class="mb-1"><?php echo $video->title; ?></h6>
+                    <p class="text-muted small mb-0"><?php echo $video->description; ?></p>
+                  </div>
+                <?php } ?>
+              </div>
             </div>
           </div>
-<?php } ?>
-          <!-- Additional breaking headlines -->
-           <?php if (isset($videos) && !empty($videos)) { ?>
-            <div class="row g-3">
-            <?php foreach ($videos as $video) { ?>
-              <div class="col-md-4">
-                <div class="card border-0 shadow-sm p-3">
-                  <h6 class="mb-2"><?php echo $video->title; ?></h6>
-                  <div class="ratio ratio-16x9 mb-2">
-                    <?php echo $video->video_link; ?>
-                  </div>
-                  <p class="text-muted small mb-0">
-                    <?php echo $video->description; ?>
-                  </p>
+        <?php } ?>
+      </div>
+
+      <!-- Column 2: Breaking News -->
+      <main class="col-lg-6">
+        <div class="row g-3">
+          <?php for($i = 0; $i < 3 && $i < count($breaking_news); $i++) { $item = $breaking_news[$i]; ?>
+            <div class="col-md-4">
+              <div class="card border-0 shadow-sm h-100">
+                <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $item->cover_picture; ?>" class="card-img-top object-fit-cover" alt="" style="height: 200px;">
+                <div class="card-body">
+                  <span class="badge bg-primary mb-2">Breaking</span>
+                  <h5 class="card-title"><?php echo $item->title; ?></h5>
+                  <p class="card-text"><?php echo substr(strip_tags($item->content), 0, 100); ?>...</p>
+                  <a href="<?php echo base_url(); ?>single_news/<?php echo $item->slug; ?>" class="btn btn-primary">Read More</a>
                 </div>
               </div>
-            <?php } ?>
+            </div>
+          <?php } ?>
+        </div>
+          <!-- Additional breaking headlines -->
+           <?php if (isset($videos) && !empty($videos)) { ?>
+            <div class="d-none d-lg-block">
+              <div class="row g-3">
+              <?php foreach ($videos as $video) { ?>
+                <div class="col-md-4">
+                  <div class="card border-0 shadow-sm p-3">
+                    <h6 class="mb-2"><?php echo $video->title; ?></h6>
+                    <div class="ratio ratio-16x9 mb-2">
+                      <?php echo $video->video_link; ?>
+                    </div>
+                    <p class="text-muted small mb-0">
+                      <?php echo $video->description; ?>
+                    </p>
+                  </div>
+                </div>
+              <?php } ?>
+              </div>
             </div>
            <?php } ?>
            
@@ -375,7 +423,7 @@
             <div class="list-group list-group-flush">
 
               <?php foreach ($latest_news as $news) { ?>
-                <a href="<?php echo base_url(); ?>single_news/<?php echo $news->newsid; ?>" class="list-group-item d-flex align-items-start">
+                <a href="<?php echo base_url(); ?>single_news/<?php echo $news->slug; ?>" class="list-group-item d-flex align-items-start">
                   <img src="<?php echo base_url(); ?>assets/uploads/<?php echo $news->cover_picture; ?>" class="rounded me-3" style="width:72px;height:50px;object-fit:cover" alt="thumb">
                   <div>
                     <div class="fw-semibold"><?php echo $news->title; ?></div>
